@@ -15,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -29,8 +27,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Index;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
@@ -80,14 +76,6 @@ public class Contest implements Serializable {
     @Index(name = "CONTEST_REGULATION_INDEX")
     private String regulation;
     //
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "CONTEST_PRIZE", joinColumns =
-            @JoinColumn(name = "contest_id", referencedColumnName = "id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "prize_id", referencedColumnName = "id"))
-    private List<Prize> prizeList;
-    //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "contest_type_id", referencedColumnName = "id",
@@ -109,4 +97,97 @@ public class Contest implements Serializable {
     @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY, orphanRemoval = true)
     @Cascade(CascadeType.DELETE)
     private List<AbstractConfigRule> configRuleList;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getMinCoin() {
+        return minCoin;
+    }
+
+    public void setMinCoin(int minCoin) {
+        this.minCoin = minCoin;
+    }
+
+    public String getUrlAddress() {
+        return urlAddress;
+    }
+
+    public void setUrlAddress(String urlAddress) {
+        this.urlAddress = urlAddress;
+    }
+
+    public int getNumberOfWin() {
+        return numberOfWin;
+    }
+
+    public void setNumberOfWin(int numberOfWin) {
+        this.numberOfWin = numberOfWin;
+    }
+
+    public String getRegulation() {
+        return regulation;
+    }
+
+    public void setRegulation(String regulation) {
+        this.regulation = regulation;
+    }
+
+    public ContestType getContestType() {
+        return contestType;
+    }
+
+    public void setContestType(ContestType contestType) {
+        this.contestType = contestType;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public List<ContestInfo> getContestInfoList() {
+        return contestInfoList;
+    }
+
+    public void setContestInfoList(List<ContestInfo> contestInfoList) {
+        this.contestInfoList = contestInfoList;
+    }
+
+    public List<AbstractConfigRule> getConfigRuleList() {
+        return configRuleList;
+    }
+
+    public void setConfigRuleList(List<AbstractConfigRule> configRuleList) {
+        this.configRuleList = configRuleList;
+    }
+
+    @Override
+    public String toString() {
+        return "Contest{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", contestType=" + contestType + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + '}';
+    }
 }

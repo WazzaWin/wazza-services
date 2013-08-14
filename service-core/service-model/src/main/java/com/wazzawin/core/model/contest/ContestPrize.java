@@ -25,36 +25,35 @@ import org.hibernate.annotations.OnDeleteAction;
  * @author Nazzareno Sileno - WazzaWin Developer Group
  * @email nazzareno.sileno@gmail.com
  */
-@XmlRootElement(name = "contest_info")
+@XmlRootElement(name = "contest_prize")
 @Entity
-@Table(name = "CONTEST_INFO")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "contest_info")
-public class ContestInfo implements Serializable {
-    private static final long serialVersionUID = 4516772948741878526L;
+@Table(name = "CONTEST_PRIZE")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "contest_prize")
+public class ContestPrize implements Serializable {
+    private static final long serialVersionUID = 8109760184180383771L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY,
-            generator = "CONTEST_INFO_SEQ")
-    @SequenceGenerator(name = "CONTEST_INFO_SEQ", sequenceName = "CONTEST_INFO_SEQ")
+            generator = "CONTEST_PRIZE_SEQ")
+    @SequenceGenerator(name = "CONTEST_PRIZE_SEQ", sequenceName = "CONTEST_PRIZE_SEQ")
     private Long id;
     //
-    @Column(name = "title", columnDefinition = "VARCHAR(254)")
-    @Index(name = "CONTEST_INFO_TITLE_INDEX")
-    private String title;
+    @Column(name = "number_of_prizes", columnDefinition = "INTEGER")
+    @Index(name = "CONTEST_PRIZE_NUMBER_OF_PRIZES_INDEX")
+    private int numberOfPrizes;
     //
-    @Column(name = "url_image", columnDefinition = "VARCHAR(254)")
-    @Index(name = "CONTEST_INFO_URL_IMAGE_INDEX")
-    private String urlImage;
-    //
-    @Column(name = "description", columnDefinition = "TEXT")
-    @Index(name = "CONTEST_INFO_DESCRIPTION_INDEX")
-    private String description;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "prize_id", referencedColumnName = "id",
+            nullable = false)
+    @Index(name = "CONTEST_PRIZE_PRIZE_INDEX")
+    private Prize prize;
     //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "contest_id", referencedColumnName = "id",
             nullable = false)
-    @Index(name = "CONTEST_INFO_CONTEST_INDEX")
+    @Index(name = "CONTEST_PRIZE_CONTEST_INDEX")
     private Contest contest;
 
     public Long getId() {
@@ -65,28 +64,20 @@ public class ContestInfo implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getNumberOfPrizes() {
+        return numberOfPrizes;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNumberOfPrizes(int numberOfPrizes) {
+        this.numberOfPrizes = numberOfPrizes;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public Prize getPrize() {
+        return prize;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrize(Prize prize) {
+        this.prize = prize;
     }
 
     public Contest getContest() {
@@ -99,6 +90,6 @@ public class ContestInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ContestInfo{" + "id=" + id + ", title=" + title + ", urlImage=" + urlImage + ", description=" + description + ", contest=" + contest + '}';
+        return "ContestPrize{" + "id=" + id + ", numberOfPrizes=" + numberOfPrizes + ", prize=" + prize + ", contest=" + contest + '}';
     }
 }
