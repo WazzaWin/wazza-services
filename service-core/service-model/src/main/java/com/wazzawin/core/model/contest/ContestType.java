@@ -50,6 +50,11 @@ public class ContestType implements Serializable {
     @Column(name = "url_image", columnDefinition = "VARCHAR(254)")
     @Index(name = "CONTEST_TYPE_URL_IMAGE_INDEX")
     private String urlImage;
+
+    @Column(name = "url_agreement", columnDefinition = "VARCHAR(254)")
+    @Index(name = "CONTEST_TYPE_URL_AGREEMENT_INDEX")
+    private String urlAgreement;
+
     //
     @OneToMany(mappedBy = "contestType", fetch = FetchType.LAZY, orphanRemoval = true)
     @Cascade(CascadeType.DELETE)
@@ -98,5 +103,19 @@ public class ContestType implements Serializable {
     @Override
     public String toString() {
         return "ContestType{" + "id=" + id + ", title=" + title + ", color=" + color + ", urlImage=" + urlImage + ", contestList=" + contestList + '}';
+    }
+
+    /**
+     * @return the urlAgreement
+     */
+    public String getUrlAgreement() {
+        return urlAgreement;
+    }
+
+    /**
+     * @param urlAgreement the urlAgreement to set
+     */
+    public void setUrlAgreement(String urlAgreement) {
+        this.urlAgreement = urlAgreement;
     }
 }
