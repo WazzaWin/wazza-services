@@ -59,13 +59,13 @@ public class Prize implements Serializable {
     @Index(name = "PRIZE_URL_IMAGE_INDEX")
     private String urlImage;
     //
-    @Column(name = "value", columnDefinition = "INTEGER")
+    @Column(name = "prize_value", columnDefinition = "INTEGER")
     @Index(name = "PRIZE_VALUE_INDEX")
-    private int value;
+    private int prizeValue;
     //
-    @Column(name = "balance", columnDefinition = "INTEGER")
-    @Index(name = "PRIZE_BALANCE_INDEX")
-    private int balance;
+    @Column(name = "remaining_prizes", columnDefinition = "INTEGER")
+    @Index(name = "PRIZE_REMAINING_PRIZES_INDEX")
+    private int remainingPrizes;
     //
     @Column(name = "instant_win", columnDefinition = "BOOL DEFAULT FALSE")
     @Index(name = "PRIZE_INSTANT_WIN_INDEX")
@@ -126,20 +126,12 @@ public class Prize implements Serializable {
         this.urlImage = urlImage;
     }
 
-    public int getValue() {
-        return value;
+    public int getPrizeValue() {
+        return prizeValue;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
+    public void setPrizeValue(int value) {
+        this.prizeValue = value;
     }
 
     public boolean isInstantWin() {
@@ -168,6 +160,20 @@ public class Prize implements Serializable {
 
     @Override
     public String toString() {
-        return "Prize{" + "id=" + id + ", name=" + name + ", description=" + description + ", note=" + note + ", urlImage=" + urlImage + ", value=" + value + ", balance=" + balance + ", instantWin=" + instantWin + ", company=" + company + ", periodicityList=" + periodicityList + '}';
+        return "Prize{" + "id=" + id + ", name=" + name + ", description=" + description + ", note=" + note + ", urlImage=" + urlImage + ", value=" + prizeValue + ", balance=" + getRemainingPrizes() + ", instantWin=" + instantWin + ", company=" + company + ", periodicityList=" + periodicityList + '}';
+    }
+
+    /**
+     * @return the remainingPrizes
+     */
+    public int getRemainingPrizes() {
+        return remainingPrizes;
+    }
+
+    /**
+     * @param remainingPrizes the remainingPrizes to set
+     */
+    public void setRemainingPrizes(int remainingPrizes) {
+        this.remainingPrizes = remainingPrizes;
     }
 }
