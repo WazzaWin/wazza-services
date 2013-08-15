@@ -36,14 +36,6 @@ public class Walk extends AbstractConfigRule {
     @Index(name = "WALK_STEP_INDEX")
     private int step;
     //
-    @Column(name = "order", columnDefinition = "INTEGER")
-    @Index(name = "WALK_ORDER_INDEX")
-    private int order;
-    //
-    @OneToMany(mappedBy = "walk", fetch = FetchType.LAZY, orphanRemoval = true)
-    @Cascade(CascadeType.DELETE)
-    private List<Hint> hintList;
-    //
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "WALK_PRODUCT", joinColumns =
@@ -51,6 +43,10 @@ public class Walk extends AbstractConfigRule {
             inverseJoinColumns =
             @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private List<Product> productList;
+    //
+    @OneToMany(mappedBy = "walk", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.DELETE)
+    private List<WalkStep> walkStepList;
 
     public int getStep() {
         return step;
@@ -58,22 +54,6 @@ public class Walk extends AbstractConfigRule {
 
     public void setStep(int step) {
         this.step = step;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
-    public List<Hint> getHintList() {
-        return hintList;
-    }
-
-    public void setHintList(List<Hint> hintList) {
-        this.hintList = hintList;
     }
 
     public List<Product> getProductList() {
@@ -84,8 +64,16 @@ public class Walk extends AbstractConfigRule {
         this.productList = productList;
     }
 
+    public List<WalkStep> getWalkStepList() {
+        return walkStepList;
+    }
+
+    public void setWalkStepList(List<WalkStep> walkStepList) {
+        this.walkStepList = walkStepList;
+    }
+
     @Override
     public String toString() {
-        return "Walk{" + "step=" + step + ", order=" + order + ", hintList=" + hintList + ", productList=" + productList + '}';
+        return "Walk{" + "step=" + step + ", productList=" + productList + ", walkStepList=" + walkStepList + '}';
     }
 }

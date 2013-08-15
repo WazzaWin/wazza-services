@@ -6,7 +6,6 @@ package com.wazzawin.core.model.contest;
 
 import com.wazzawin.core.model.customer.Company;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -29,7 +27,6 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.Type;
 
 /**
  * @author Nazzareno Sileno - WazzaWin Developer Group
@@ -47,18 +44,6 @@ public class Contest implements Serializable {
             generator = "CONTEST_SEQ")
     @SequenceGenerator(name = "CONTEST_SEQ", sequenceName = "CONTEST_SEQ")
     private Long id;
-    //
-    @Temporal(TemporalType.TIMESTAMP)
-    @Type(type = "timestamp")
-    @Column(name = "start_date", columnDefinition = "DATETIME")
-    @Index(name = "CONTEST_START_DATE_INDEX")
-    private Date startDate;
-    //
-    @Temporal(TemporalType.TIMESTAMP)
-    @Type(type = "timestamp")
-    @Column(name = "end_date", columnDefinition = "DATETIME")
-    @Index(name = "CONTEST_END_DATE_INDEX")
-    private Date endDate;
     //
     @Column(name = "min_coin", columnDefinition = "INTEGER")
     @Index(name = "CONTEST_MIN_COIN_INDEX")
@@ -83,6 +68,12 @@ public class Contest implements Serializable {
     @Index(name = "CONTEST_CONTEST_TYPE_INDEX")
     private ContestType contestType;
     //
+    @OneToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "period", referencedColumnName = "id", nullable = false)
+    @Index(name = "CONTEST_PERIOD_INDEX")
+    private Period period;
+    //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "company_id", referencedColumnName = "id",
@@ -104,22 +95,6 @@ public class Contest implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public int getMinCoin() {
@@ -186,8 +161,16 @@ public class Contest implements Serializable {
         this.configRuleList = configRuleList;
     }
 
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
     @Override
     public String toString() {
-        return "Contest{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", contestType=" + contestType + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + '}';
+        return "Contest{" + "id=" + id + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", contestType=" + contestType + ", period=" + period + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + '}';
     }
 }

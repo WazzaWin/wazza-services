@@ -137,8 +137,10 @@ public class Profile implements Serializable {
     }
 
     @Embeddable
-    public class Place {
+    public class Place implements Serializable {
 
+        private static final long serialVersionUID = 3438892635062853422L;
+        //
         @Column(name = "city", columnDefinition = "VARCHAR(254)")
         @Index(name = "PROFILE_PLACE_CITY_INDEX")
         private String city;
@@ -150,6 +152,14 @@ public class Profile implements Serializable {
         @Column(name = "type")
         @Index(name = "PROFILE_PLACE_TYPE_INDEX")
         private String type;
+        //
+        @Column(name = "latitude")
+        @Index(name = "PROFILE_PLACE_LATITUDE_INDEX")
+        private long latitude;
+        //
+        @Column(name = "longitude")
+        @Index(name = "PROFILE_PLACE_LONGITUDE_INDEX")
+        private long longitude;
 
         public String getCity() {
             return city;
@@ -175,9 +185,25 @@ public class Profile implements Serializable {
             this.type = type;
         }
 
+        public long getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(long latitude) {
+            this.latitude = latitude;
+        }
+
+        public long getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(long longitude) {
+            this.longitude = longitude;
+        }
+
         @Override
         public String toString() {
-            return "Place{" + "city=" + city + ", address=" + address + ", type=" + type + '}';
+            return "Place{" + "city=" + city + ", address=" + address + ", type=" + type + ", latitude=" + latitude + ", longitude=" + longitude + '}';
         }
     }
 }

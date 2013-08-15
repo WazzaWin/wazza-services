@@ -21,6 +21,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Index;
+import org.hibernate.annotations.NaturalId;
 
 /**
  * @author Nazzareno Sileno - WazzaWin Developer Group
@@ -39,6 +40,7 @@ public class ContestType implements Serializable {
     @SequenceGenerator(name = "CONTEST_TYPE_SEQ", sequenceName = "CONTEST_TYPE_SEQ")
     private Long id;
     //
+    @NaturalId
     @Column(name = "title", columnDefinition = "VARCHAR(254)")
     @Index(name = "CONTEST_TYPE_TITLE_INDEX")
     private String title;
@@ -50,11 +52,9 @@ public class ContestType implements Serializable {
     @Column(name = "url_image", columnDefinition = "VARCHAR(254)")
     @Index(name = "CONTEST_TYPE_URL_IMAGE_INDEX")
     private String urlImage;
-
     @Column(name = "url_agreement", columnDefinition = "VARCHAR(254)")
     @Index(name = "CONTEST_TYPE_URL_AGREEMENT_INDEX")
     private String urlAgreement;
-
     //
     @OneToMany(mappedBy = "contestType", fetch = FetchType.LAZY, orphanRemoval = true)
     @Cascade(CascadeType.DELETE)
@@ -92,19 +92,6 @@ public class ContestType implements Serializable {
         this.urlImage = urlImage;
     }
 
-    public List<Contest> getContestList() {
-        return contestList;
-    }
-
-    public void setContestList(List<Contest> contestList) {
-        this.contestList = contestList;
-    }
-
-    @Override
-    public String toString() {
-        return "ContestType{" + "id=" + id + ", title=" + title + ", color=" + color + ", urlImage=" + urlImage + ", contestList=" + contestList + '}';
-    }
-
     /**
      * @return the urlAgreement
      */
@@ -117,5 +104,18 @@ public class ContestType implements Serializable {
      */
     public void setUrlAgreement(String urlAgreement) {
         this.urlAgreement = urlAgreement;
+    }
+
+    public List<Contest> getContestList() {
+        return contestList;
+    }
+
+    public void setContestList(List<Contest> contestList) {
+        this.contestList = contestList;
+    }
+
+    @Override
+    public String toString() {
+        return "ContestType{" + "id=" + id + ", title=" + title + ", color=" + color + ", urlImage=" + urlImage + ", urlAgreement=" + urlAgreement + ", contestList=" + contestList + '}';
     }
 }

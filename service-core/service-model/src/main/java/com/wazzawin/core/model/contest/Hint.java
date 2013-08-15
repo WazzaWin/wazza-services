@@ -47,10 +47,10 @@ public class Hint implements Serializable {
     //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "walk_id", referencedColumnName = "id",
+    @JoinColumn(name = "walk_step_id", referencedColumnName = "id",
             nullable = false)
-    @Index(name = "HINT_WALK_INDEX")
-    private Walk walk;
+    @Index(name = "HINT_WALK_STEP_INDEX")
+    private WalkStep walkStep;
     //
     @ManyToOne(optional = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -83,12 +83,12 @@ public class Hint implements Serializable {
         this.coinEffort = coinEffort;
     }
 
-    public Walk getWalk() {
-        return walk;
+    public WalkStep getWalkStep() {
+        return walkStep;
     }
 
-    public void setWalk(Walk walk) {
-        this.walk = walk;
+    public void setWalkStep(WalkStep walkStep) {
+        this.walkStep = walkStep;
     }
 
     public Product getProduct() {
@@ -101,6 +101,6 @@ public class Hint implements Serializable {
 
     @Override
     public String toString() {
-        return "Hint{" + "id=" + id + ", text=" + text + ", coinEffort=" + coinEffort + ", walk=" + walk + ", product=" + product + '}';
+        return "Hint{" + "id=" + id + ", text=" + text + ", coinEffort=" + coinEffort + ", walkStep=" + walkStep + ", product=" + product + '}';
     }
 }
