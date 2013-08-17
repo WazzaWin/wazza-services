@@ -49,7 +49,7 @@ public class Profile implements Serializable {
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "birth_date", columnDefinition = "DATETIME")
+    @Column(name = "birth_date", columnDefinition = "DATE")
     @Index(name = "PROFILE_BIRTH_DATE_INDEX")
     private Date birthDate;
     //
@@ -75,6 +75,9 @@ public class Profile implements Serializable {
             @JoinColumn(name = "PROFILE_ID"))
     private List<String> interestList;
 
+    public Profile() {
+    }
+    
     public Long getId() {
         return id;
     }
@@ -161,6 +164,9 @@ public class Profile implements Serializable {
         @Index(name = "PROFILE_PLACE_LONGITUDE_INDEX")
         private long longitude;
 
+        public Place() {
+        }
+        
         public String getCity() {
             return city;
         }

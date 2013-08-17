@@ -36,56 +36,56 @@ import org.hibernate.annotations.Type;
  * @author Nazzareno Sileno - WazzaWin Developer Group
  * @email nazzareno.sileno@gmail.com
  */
-@XmlRootElement(name = "user")
+@XmlRootElement(name = "wazza_user")
 @Entity
-@Table(name = "USER")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "user")
-public class User implements Serializable {
+@Table(name = "WAZZA_USER")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "wazza_user")
+public class WazzaUser implements Serializable {
 
     private static final long serialVersionUID = -2206994069412185311L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY,
-            generator = "USER_SEQ")
-    @SequenceGenerator(name = "USER_SEQ", sequenceName = "USER_SEQ")
+            generator = "WAZZA_USER_SEQ")
+    @SequenceGenerator(name = "WAZZA_USER_SEQ", sequenceName = "WAZZA_USER_SEQ")
     private Long id;
     //
     @NaturalId
     @Column(name = "user_name", columnDefinition = "VARCHAR(128)", nullable = false)
-    @Index(name = "USER_NAME_INDEX")
+    @Index(name = "WAZZA_USER_NAME_INDEX")
     private String userName;
     //
     @Column(name = "email", columnDefinition = "VARCHAR(128)", nullable = false)
-    @Index(name = "USER_EMAIL_INDEX")
+    @Index(name = "WAZZA_USER_EMAIL_INDEX")
     private String email;
     //
-    @Column(name = "password", columnDefinition = "VARCHAR(254)")
-    @Index(name = "USER_PASSWORD_INDEX")
+    @Column(name = "password", columnDefinition = "VARCHAR(254)", nullable = false)
+    @Index(name = "WAZZA_USER_PASSWORD_INDEX")
     private String password;
     //
     @Column(name = "phone_number", columnDefinition = "VARCHAR(10)")
-    @Index(name = "USER_PHONE_NUMBER_INDEX")
+    @Index(name = "WAZZA_USER_PHONE_NUMBER_INDEX")
     private String phoneNumber;
     //
     @Column(name = "enabled", columnDefinition = "BOOL DEFAULT FALSE")
-    @Index(name = "USER_ENABLED_INDEX")
+    @Index(name = "WAZZA_USER_ENABLED_INDEX")
     private boolean enabled;
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "last_login", columnDefinition = "DATETIME")
-    @Index(name = "USER_LAST_LOGIN_INDEX")
+    @Column(name = "last_login", columnDefinition = "DATE")
+    @Index(name = "WAZZA_USER_LAST_LOGIN_INDEX")
     private Date lastLogin;
     //
     @OneToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "profile", referencedColumnName = "id", nullable = false)
-    @Index(name = "USER_PROFILE_INDEX")
+    @Index(name = "WAZZA_USER_PROFILE_INDEX")
     private Profile profile;
     //
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "USER_CONTEST", joinColumns =
-            @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            @JoinColumn(name = "wazza_user_id", referencedColumnName = "id"),
             inverseJoinColumns =
             @JoinColumn(name = "contest_id", referencedColumnName = "id"))
     private List<Contest> contestList;

@@ -54,14 +54,21 @@
 
     </developers>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit-version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     
     <build>
         <defaultGoal>clean install</defaultGoal>
@@ -145,12 +152,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dozer-version>5.4.0</dozer-version>
         <hibernate-version>4.2.3.Final</hibernate-version>
+        <hibernate-search-version>4.3.0.Final</hibernate-search-version>
         <spring-version>3.2.3.RELEASE</spring-version>
+        <guava-version>14.0.1</guava-version>
+        <hibernate-persistence-version>1.0.1.Final</hibernate-persistence-version>
+        <hibernate-commons-annotations-version>4.0.2.Final</hibernate-commons-annotations-version>
+        <spring-data-jpa-version>1.3.2.RELEASE</spring-data-jpa-version>
         <junit-version>4.11</junit-version>
     </properties>
     
     <modules>
         <module>service-core</module>
-    <module>wazza-shared</module>
-  </modules>
+        <module>wazza-shared</module>
+    </modules>
 </project>

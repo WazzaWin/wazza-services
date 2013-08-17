@@ -47,13 +47,13 @@ public class Period implements Serializable {
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "start_date", columnDefinition = "DATETIME")
+    @Column(name = "start_date", columnDefinition = "DATE")
     @Index(name = "CONTEST_START_DATE_INDEX")
     private Date startDate;
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "end_date", columnDefinition = "DATETIME")
+    @Column(name = "end_date", columnDefinition = "DATE")
     @Index(name = "CONTEST_END_DATE_INDEX")
     private Date endDate;
     //

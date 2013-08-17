@@ -44,7 +44,7 @@ public class Activity implements Serializable {
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "event_date", columnDefinition = "DATETIME")
+    @Column(name = "event_date", columnDefinition = "DATE")
     @Index(name = "ACTIVITY_EVENT_DATE_INDEX")
     private Date eventDate;
     //

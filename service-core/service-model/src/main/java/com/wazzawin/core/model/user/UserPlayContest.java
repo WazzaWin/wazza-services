@@ -45,10 +45,10 @@ public class UserPlayContest implements Serializable {
     //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id", referencedColumnName = "id",
+    @JoinColumn(name = "wazza_user_id", referencedColumnName = "id",
             nullable = false)
     @Index(name = "USER_PLAY_CONTEST_USER_INDEX")
-    private User user;
+    private WazzaUser wazzaUser;
     //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -59,7 +59,7 @@ public class UserPlayContest implements Serializable {
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "play_date", columnDefinition = "DATETIME")
+    @Column(name = "play_date", columnDefinition = "DATE")
     @Index(name = "USER_PLAY_CONTEST_PLAY_DATE_INDEX")
     private Date playDate;
     //
@@ -83,12 +83,12 @@ public class UserPlayContest implements Serializable {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public WazzaUser getWazzaUser() {
+        return wazzaUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setWazzaUser(WazzaUser wazzaUser) {
+        this.wazzaUser = wazzaUser;
     }
 
     public Contest getContest() {
@@ -133,6 +133,6 @@ public class UserPlayContest implements Serializable {
 
     @Override
     public String toString() {
-        return "UserPlayContest{" + "id=" + id + ", user=" + user + ", contest=" + contest + ", playDate=" + playDate + ", playCode=" + playCode + ", controlCode=" + controlCode + ", winning=" + winning + '}';
+        return "UserPlayContest{" + "id=" + id + ", user=" + wazzaUser + ", contest=" + contest + ", playDate=" + playDate + ", playCode=" + playCode + ", controlCode=" + controlCode + ", winning=" + winning + '}';
     }
 }

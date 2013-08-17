@@ -67,7 +67,7 @@ public class Company implements Serializable {
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "last_login", columnDefinition = "DATETIME")
+    @Column(name = "last_login", columnDefinition = "DATE")
     @Index(name = "COMPANY_LAST_LOGIN_INDEX")
     private Date lastLogin;
     //
