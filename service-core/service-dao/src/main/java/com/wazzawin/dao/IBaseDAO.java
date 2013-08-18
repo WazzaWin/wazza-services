@@ -16,8 +16,6 @@ public interface IBaseDAO<T extends Object, ID extends Serializable> {
     T update(T entity);
 
     int removeAll();
-    
-    int removeAllFromThisTable(String tableName);
 
     void delete(Long id);
 

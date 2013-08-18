@@ -55,8 +55,8 @@ public class BaseHibernateProperties
                             gpHibernateProperties.getHibCacheRegionFactoryClass());
                     this.put("hibernate.cache.use_second_level_cache",
                             gpHibernateProperties.isHibUseSecondLevelCache());
-//                    this.put("net.sf.ehcache.configurationResourceName",
-//                            gpHibernateProperties.getEhcacheConfResourceName());
+                    this.put("net.sf.ehcache.configurationResourceName",
+                            gpHibernateProperties.getEhcacheConfResourceName());
                     this.put("hibernate.cache.use_query_cache",
                             gpHibernateProperties.isHibUseQueryCache());
                 } else if (gpHibernateProperties.isHibUseSecondLevelCache()) {

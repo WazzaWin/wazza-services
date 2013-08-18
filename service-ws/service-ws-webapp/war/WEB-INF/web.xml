@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+
+    <!-- Adding the Spring Context Listener. It will help to init Spring Context -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:applicationContext.xml
+        </param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>jpa</param-value>
+    </context-param>
+    
+    <servlet>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>org.geosdi.contacto.ui.server.upload.FileUploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/contacto/FileUploadServlet/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ContactoRemote</servlet-name>
+        <servlet-class>org.geosdi.contacto.ui.server.gwt.ContactoRemoteImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactoRemote</servlet-name>
+        <url-pattern>/contacto/ContactoRemote</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ContactoAttachmentsDownloadServlet</servlet-name>
+        <servlet-class>org.geosdi.contacto.mail.attachments.download.ContactoAttachmentsDownloadServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactoAttachmentsDownloadServlet</servlet-name>
+        <url-pattern>/contacto/ContactoAttachmentsDownloadServlet/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Default page to serve -->
+    <welcome-file-list>
+        <welcome-file>Contacto.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

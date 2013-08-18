@@ -1,0 +1,201 @@
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+    
+    <diskStore path="java.io.tmpdir" />
+
+    <defaultCache maxElementsInMemory="10000"
+                  eternal="false"
+                  timeToIdleSeconds="120" 
+                  timeToLiveSeconds="120" 
+                  diskExpiryThreadIntervalSeconds="120"
+                  memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </defaultCache>
+
+    <!-- Model -->
+    <cache name="category"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="contest"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="contest_info"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="contest_prize"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+    
+    <cache name="contest_type"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="hint"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="period"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="periodicity"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="prize"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="product"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="config_rule"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="walk_step"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="company"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="activity"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="profile"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="user_play_contest"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <cache name="wazza_user"
+           maxElementsInMemory="10000" 
+           eternal="false"
+           timeToIdleSeconds="240" 
+           timeToLiveSeconds="240" 
+           diskExpiryThreadIntervalSeconds="240"
+           memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>                
+
+    <!-- Hibernate -->
+    <cache name="org.hibernate.cache.StandardQueryCache"
+           maxElementsInMemory="200" 
+           eternal="false" 
+           timeToLiveSeconds="120">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="org.hibernate.cache.UpdateTimestampsCache"
+           maxElementsInMemory="5000" 
+           eternal="true">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+</ehcache>

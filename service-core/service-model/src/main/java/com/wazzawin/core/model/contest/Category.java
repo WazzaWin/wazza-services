@@ -19,13 +19,13 @@ import org.hibernate.annotations.Index;
 import org.hibernate.annotations.NaturalId;
 
 /**
- * @author Nazzareno Sileno - CNR IMAA geoSDI Group
- * @email nazzareno.sileno@geosdi.org
+ * @author Nazzareno Sileno - WazzaWin Developer Group
+ * @email nazzareno.sileno@gmail.com
  */
 @XmlRootElement(name = "category")
 @Entity
 @Table(name = "CATEGORY")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "caterogy")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "category")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = -8299549597685350613L;

@@ -21,7 +21,7 @@
         <property name="locations">
             <list>
                 <value>classpath:persistence-db.properties</value>
-                <value>file:${GP_DATA_DIR}/persistence-db.properties</value>
+                <value>file:${SHARED_DATA_DIR}/persistence-db.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true" />

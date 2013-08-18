@@ -140,14 +140,6 @@ public abstract class AbstractJpaDAO<T extends Object, ID extends Serializable>
         return q.executeUpdate();
     }
 
-    @Override
-    public int removeAllFromThisTable(String tableName) {
-        Query q = this.entityManager.createNativeQuery("delete from "
-                + tableName, persistentClass);
-
-        return q.executeUpdate();
-    }
-
     protected Class< T> getPersistentClass() {
         if (logger.isDebugEnabled()) {
             logger.debug("@@@@@@@@@@@@@@@@@@@@@ Persistent Class : "
