@@ -96,7 +96,7 @@ public class ProfileDTO implements Serializable {
         return "ProfileDTO{" + "id=" + id + ", birthDate=" + birthDate + ", city=" + city + ", coinBalance=" + coinBalance + ", activityList=" + activityList + ", placeList=" + placeList + ", interestList=" + interestList + '}';
     }
 
-    public class PlaceDTO implements Serializable {
+    public static class PlaceDTO implements Serializable {
 
         private static final long serialVersionUID = -4796038133908769244L;
         private String city;

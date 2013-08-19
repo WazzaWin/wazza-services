@@ -2,8 +2,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         version="3.0">
-
+         version="3.0" metadata-complete="true">
 
     <!-- Adding the Spring Context Listener. It will help to init Spring Context -->
     <listener>
@@ -22,37 +21,16 @@
         <param-value>jpa</param-value>
     </context-param>
     
+    <!-- CXF Servlet -->
     <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <servlet-class>org.geosdi.contacto.ui.server.upload.FileUploadServlet</servlet-class>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/contacto/FileUploadServlet/*</url-pattern>
-    </servlet-mapping>
     
-    <servlet>
-        <servlet-name>ContactoRemote</servlet-name>
-        <servlet-class>org.geosdi.contacto.ui.server.gwt.ContactoRemoteImpl</servlet-class>
-    </servlet>
+    <!-- Mapping with a URL Pattern -->
     <servlet-mapping>
-        <servlet-name>ContactoRemote</servlet-name>
-        <url-pattern>/contacto/ContactoRemote</url-pattern>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>ContactoAttachmentsDownloadServlet</servlet-name>
-        <servlet-class>org.geosdi.contacto.mail.attachments.download.ContactoAttachmentsDownloadServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ContactoAttachmentsDownloadServlet</servlet-name>
-        <url-pattern>/contacto/ContactoAttachmentsDownloadServlet/*</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Default page to serve -->
-    <welcome-file-list>
-        <welcome-file>Contacto.html</welcome-file>
-    </welcome-file-list>
 
 </web-app>

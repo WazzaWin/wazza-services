@@ -2,6 +2,7 @@ package com.wazzawin.persistence;
 
 import com.wazzawin.core.model.user.Profile;
 import com.wazzawin.core.model.user.WazzaUser;
+import com.wazzawin.crypt.WazzaByteDigester;
 import com.wazzawin.dao.interf.user.IProfileDAO;
 import com.wazzawin.dao.interf.user.IWazzaUserDAO;
 import com.wazzawin.persistence.loader.PersistenceLoaderTestConfigurer;
@@ -18,8 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 /**
- * @author Nazzareno Sileno - CNR IMAA geoSDI Group
- * @email nazzareno.sileno@geosdi.org
+ * @author Nazzareno Sileno - WazzaWin Developer Group
+ * @email nazzareno.sileno@gmail.com
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceLoaderTestConfigurer.class},
@@ -34,6 +35,8 @@ public class WazzaModelTest {
     private IWazzaUserDAO jpaWazzaUserDAO;
     @Autowired
     private IProfileDAO jpaProfileDAO;
+    @Autowired
+    private WazzaByteDigester wazzaByteDigester;
     //
     private WazzaUser wazzaUser;
     private Profile profile;
@@ -43,8 +46,9 @@ public class WazzaModelTest {
         this.removeAll();
         this.wazzaUser = new WazzaUser();
         this.wazzaUser.setUserName("giasum");
-        this.wazzaUser.setEmail("giasum@gmail.com");
-        this.wazzaUser.setPassword("senatus");
+        this.wazzaUser.setEmail("senatus@gmail.com");
+        this.wazzaUser.setPassword(this.wazzaByteDigester.gsDigest("senatus"));
+        logger.info("Coded Password: " + this.wazzaUser.getPassword());
         this.profile = new Profile();
         this.wazzaUser.setProfile(profile);
     }
@@ -60,6 +64,7 @@ public class WazzaModelTest {
         this.jpaWazzaUserDAO.persist(wazzaUser);
         this.wazzaUser = this.jpaWazzaUserDAO.findByUserName("giasum");
         Assert.assertNotNull("Utente salvato e trovato", this.wazzaUser);
+        logger.debug("\n*** User SAVED:\n{}\n***", this.wazzaUser);
 //        Assert.assertThat("La regione Basilicata deve contenere 129 comuni",
 //                pagingContactoComuni.getTotalResults(), OrderingComparison.greaterThanOrEqualTo(129));
         //CoreMatchers.is()

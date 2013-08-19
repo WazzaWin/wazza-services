@@ -4,3 +4,4 @@
 /service-ws/service-ws-api/target/
 /service-core/service-model/target/
 /service-core/service-dao/target/
+/service-crypt/target/

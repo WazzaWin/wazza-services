@@ -188,6 +188,8 @@
         <hibernate-version>4.2.3.Final</hibernate-version>
         <hibernate-search-version>4.3.0.Final</hibernate-search-version>
         <spring-version>3.2.3.RELEASE</spring-version>
+        <spring-security-version>3.1.4.RELEASE</spring-security-version>
+        <spring-jmx-version>2.0.8</spring-jmx-version>
         <guava-version>14.0.1</guava-version>
         <ehcache-version>2.6.6</ehcache-version>
         <hibernate-persistence-version>1.0.1.Final</hibernate-persistence-version>
@@ -195,8 +197,12 @@
         <spring-data-jpa-version>1.3.2.RELEASE</spring-data-jpa-version>
         <slf4j-version>1.7.5</slf4j-version>
         <logback-version>1.0.13</logback-version>
+        <log4j-version>1.2.17</log4j-version>
         <junit-version>4.11</junit-version>
         <cxf-version>2.7.5</cxf-version>
+        <jasypt-version>1.9.0</jasypt-version>
+        <commons-lang-version>2.6</commons-lang-version>
+        <commons-collections-version>3.2.1</commons-collections-version>
         <jetty-version>8.1.11.v20130520</jetty-version>
         <cargo-version>1.4.2</cargo-version>
     </properties>
@@ -205,5 +211,6 @@
         <module>service-core</module>
         <module>wazza-shared</module>
     <module>service-ws</module>
+    <module>service-crypt</module>
   </modules>
 </project>

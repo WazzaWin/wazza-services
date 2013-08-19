@@ -13,7 +13,7 @@
     <artifactId>service-ws-api</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>WazzaWin :: == Wazza Services WS API</name>
+    <name>WazzaWin :: == Service WS API</name>
             
     <url>http://www.wazzawin.com</url>
 

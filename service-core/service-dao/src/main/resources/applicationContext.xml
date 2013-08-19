@@ -16,13 +16,5 @@
 
     <!-- Scan for @Autowired annotations -->
     <context:annotation-config/>
-    
-<!--    <bean id="mapper" class="org.dozer.DozerBeanMapper">
-        <property name="mappingFiles">
-            <list>
-                <value>dozer-wazza-mappings.xml</value>
-            </list>
-        </property>
-    </bean>-->
 
 </beans>
