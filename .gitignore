@@ -5,3 +5,4 @@
 /service-core/service-model/target/
 /service-core/service-dao/target/
 /service-crypt/target/
+/service-ws/service-ws-webapp/war/WEB-INF/classes/
