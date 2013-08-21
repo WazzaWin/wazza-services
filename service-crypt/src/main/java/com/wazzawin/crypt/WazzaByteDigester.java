@@ -58,8 +58,26 @@ public class WazzaByteDigester implements ByteDigester {
     // Number of hash iterations to be applied
     private int iterations = DEFAULT_ITERATIONS;
 
+    /**
+     * The default constructor uses the MD5 alghoritm
+     */
+    public WazzaByteDigester() {
+    }
+
+    public WazzaByteDigester(String algorithm) {
+        this.algorithm = algorithm;
+        this.initializeByteDigester();
+    }
+
+    public WazzaByteDigester(String algorithm, int saltSizeBytes, int iterations) {
+        this.algorithm = algorithm;
+        this.saltSizeBytes = saltSizeBytes;
+        this.iterations = iterations;
+        this.initializeByteDigester();
+    }
+
     @PostConstruct
-    public void initializeByteDigester() {
+    public final void initializeByteDigester() {
         this.standardByteDigester = new StandardByteDigester();
         this.standardByteDigester.setAlgorithm(algorithm);
         this.standardByteDigester.setSaltSizeBytes(saltSizeBytes);
@@ -74,8 +92,8 @@ public class WazzaByteDigester implements ByteDigester {
     /*
      * @return It returns the appropriate password encoded using digest encryption
      */
-    public String gsDigest(String passwordToDigest) {
-        return ("digest1:" + new String(Base64.encodeBase64(
+    public String digest(String passwordToDigest) {
+        return (new String(Base64.encodeBase64(
                 this.digest(passwordToDigest.getBytes(Charset.defaultCharset())))));
     }
 

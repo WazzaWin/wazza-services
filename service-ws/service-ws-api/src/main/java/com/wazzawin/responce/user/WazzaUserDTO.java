@@ -35,7 +35,6 @@
  */
 package com.wazzawin.responce.user;
 
-import com.wazzawin.responce.contest.ContestDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +56,7 @@ public class WazzaUserDTO implements Serializable {
     private Date lastLogin;
     private Boolean enabled;
     private ProfileDTO profileDTO;
-    private List<ContestDTO> contestDTOList;
+    private List<UserPlayContestDTO> userPlayContestDTOList;
 
     public WazzaUserDTO() {
     }
@@ -126,17 +125,16 @@ public class WazzaUserDTO implements Serializable {
         this.profileDTO = profileDTO;
     }
 
-    public List<ContestDTO> getContestDTOList() {
-        return contestDTOList;
+    public List<UserPlayContestDTO> getUserPlayContestDTOList() {
+        return userPlayContestDTOList;
     }
 
-    public void setContestDTOList(List<ContestDTO> contestDTOList) {
-        this.contestDTOList = contestDTOList;
+    public void setUserPlayContestDTOList(List<UserPlayContestDTO> userPlayContestDTOList) {
+        this.userPlayContestDTOList = userPlayContestDTOList;
     }
 
     @Override
     public String toString() {
-        return "WazzaUserDTO{" + "id=" + id + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", lastLogin=" + lastLogin + ", enabled=" + enabled + ", profileDTO=" + profileDTO + ", contestDTOList=" + contestDTOList + '}';
+        return "WazzaUserDTO{" + "id=" + id + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", lastLogin=" + lastLogin + ", enabled=" + enabled + ", profileDTO=" + profileDTO + ", userPlayContestDTOList=" + userPlayContestDTOList + '}';
     }
-    
 }

@@ -35,18 +35,17 @@
  */
 package com.wazzawin.core.model.user;
 
-import com.wazzawin.core.model.contest.Contest;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -55,9 +54,9 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Index;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -113,13 +112,9 @@ public class WazzaUser implements Serializable {
     @Index(name = "WAZZA_USER_PROFILE_INDEX")
     private Profile profile;
     //
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "USER_CONTEST", joinColumns =
-            @JoinColumn(name = "wazza_user_id", referencedColumnName = "id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "contest_id", referencedColumnName = "id"))
-    private List<Contest> contestList;
+    @OneToMany(mappedBy = "wazzaUser", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.DELETE)
+    private List<UserPlayContest> userPlayContestList;
 
     public Long getId() {
         return id;
@@ -185,20 +180,16 @@ public class WazzaUser implements Serializable {
         this.profile = profile;
     }
 
-    public List<Contest> getContestList() {
-        return contestList;
+    public List<UserPlayContest> getUserPlayContestList() {
+        return userPlayContestList;
     }
 
-    public void setContestList(List<Contest> contestList) {
-        this.contestList = contestList;
+    public void setUserPlayContestList(List<UserPlayContest> userPlayContestList) {
+        this.userPlayContestList = userPlayContestList;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", userName=" + userName + ", email="
-                + email + ", password=" + password + ", phoneNumber="
-                + phoneNumber + ", enabled=" + enabled + ", lastLogin="
-                + lastLogin + ", profile=" + profile + ", contestList="
-                + contestList + '}';
+        return "WazzaUser{" + "id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password + ", phoneNumber=" + phoneNumber + ", enabled=" + enabled + ", lastLogin=" + lastLogin + ", profile=" + profile + ", userPlayContestList=" + userPlayContestList + '}';
     }
 }

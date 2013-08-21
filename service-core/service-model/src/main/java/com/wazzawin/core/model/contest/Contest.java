@@ -36,6 +36,7 @@
 package com.wazzawin.core.model.contest;
 
 import com.wazzawin.core.model.customer.Company;
+import com.wazzawin.core.model.user.UserPlayContest;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -91,6 +92,14 @@ public class Contest implements Serializable {
     @Column(name = "regulation", columnDefinition = "TEXT")
     @Index(name = "CONTEST_REGULATION_INDEX")
     private String regulation;
+    //
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.DELETE)
+    private List<UserPlayContest> userPlayContestList;
+    //
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.DELETE)
+    private List<ContestPrize> contestPrizeList;
     //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -160,6 +169,22 @@ public class Contest implements Serializable {
         this.regulation = regulation;
     }
 
+    public List<UserPlayContest> getUserPlayContestList() {
+        return userPlayContestList;
+    }
+
+    public void setUserPlayContestList(List<UserPlayContest> userPlayContestList) {
+        this.userPlayContestList = userPlayContestList;
+    }
+
+    public List<ContestPrize> getContestPrizeList() {
+        return contestPrizeList;
+    }
+
+    public void setContestPrizeList(List<ContestPrize> contestPrizeList) {
+        this.contestPrizeList = contestPrizeList;
+    }
+
     public ContestType getContestType() {
         return contestType;
     }
@@ -202,6 +227,6 @@ public class Contest implements Serializable {
 
     @Override
     public String toString() {
-        return "Contest{" + "id=" + id + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", contestType=" + contestType + ", period=" + period + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + '}';
+        return "Contest{" + "id=" + id + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", userPlayContestList=" + userPlayContestList + ", contestPrizeList=" + contestPrizeList + ", contestType=" + contestType + ", period=" + period + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + '}';
     }
 }

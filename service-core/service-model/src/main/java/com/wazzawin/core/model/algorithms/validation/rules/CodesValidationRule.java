@@ -36,18 +36,19 @@
 package com.wazzawin.core.model.algorithms.validation.rules;
 
 import com.wazzawin.core.model.user.UserPlayContest;
+import com.wazzawin.crypt.WazzaByteDigester;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
-
-
 public class CodesValidationRule implements IValidationRule {
+
+    private WazzaByteDigester digester = new WazzaByteDigester();
 
     @Override
     public boolean isValid(UserPlayContest upc) {
-        if(isValidPlayCode(upc.getPlayCode()) && isValidControlCode(upc.getControlCode(), upc.getPlayCode())) {
+        if (isValidPlayCode(upc.getPlayCode()) && isValidControlCode(upc.getControlCode(), upc.getPlayCode())) {
             return true;
         }
         return false;
@@ -59,8 +60,8 @@ public class CodesValidationRule implements IValidationRule {
     }
 
     private boolean isValidControlCode(String controlCode, String playCode) {
-        String md5PlayCode = md5hash(playCode).trim();
-        if(md5PlayCode.equalsIgnoreCase(controlCode)){
+        String md5PlayCode = digester.digest(playCode);
+        if (md5PlayCode.equalsIgnoreCase(controlCode)) {
             return true;
         }
         return false;
@@ -73,9 +74,8 @@ public class CodesValidationRule implements IValidationRule {
             byte[] hash = digest.digest(str.getBytes());
             hashString = "";
             for (int i = 0; i < hash.length; i++) {
-                hashString += Integer.toHexString( 
-                                  (hash[i] & 0xFF) | 0x100 
-                              ).toLowerCase().substring(1,3);
+                hashString += Integer.toHexString(
+                        (hash[i] & 0xFF) | 0x100).toLowerCase().substring(1, 3);
             }
         } catch (java.security.NoSuchAlgorithmException e) {
             //TODO logger
@@ -83,5 +83,4 @@ public class CodesValidationRule implements IValidationRule {
         }
         return hashString;
     }
-    
 }

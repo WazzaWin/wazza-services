@@ -33,27 +33,59 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.responce.contest;
+package com.wazzawin.core.model.contest;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  * @author Nazzareno Sileno - WazzaWin Developer Group
  * @email nazzareno.sileno@gmail.com
  */
-@XmlRootElement(name = "periodicityDTO")
-public class PeriodicityDTO implements Serializable {
+@XmlRootElement(name = "prize_periodicity")
+@Entity
+@Table(name = "PRIZE_PERIODICITY")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "prize_periodicity")
+public class PrizePeriodicity implements Serializable {
 
-    private static final long serialVersionUID = -5048544954929626642L;
+    private static final long serialVersionUID = 8109760184180383771L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY,
+            generator = "PRIZE_PERIODICITY_SEQ")
+    @SequenceGenerator(name = "PRIZE_PERIODICITY_SEQ", sequenceName = "PRIZE_PERIODICITY_SEQ")
     private Long id;
     //
-    private PeriodDTO period;
+    @Column(name = "number_of_prizes", columnDefinition = "INTEGER")
+    @Index(name = "PRIZE_PERIODICITY_NUMBER_OF_PRIZES_INDEX")
+    private int numberOfPrizes;
     //
-    private int maxPlayNumber;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "prize_id", referencedColumnName = "id",
+            nullable = false)
+    @Index(name = "PRIZE_PERIODICITY_PRIZE_INDEX")
+    private Prize prize;
     //
-    private List<PrizePeriodicityDTO> prizePeriodicityDTOList;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "periodicity_id", referencedColumnName = "id",
+            nullable = false)
+    @Index(name = "PRIZE_PERIODICITY_CONTEST_INDEX")
+    private Periodicity periodicity;
 
     public Long getId() {
         return id;
@@ -63,32 +95,32 @@ public class PeriodicityDTO implements Serializable {
         this.id = id;
     }
 
-    public PeriodDTO getPeriod() {
-        return period;
+    public int getNumberOfPrizes() {
+        return numberOfPrizes;
     }
 
-    public void setPeriod(PeriodDTO period) {
-        this.period = period;
+    public void setNumberOfPrizes(int numberOfPrizes) {
+        this.numberOfPrizes = numberOfPrizes;
     }
 
-    public int getMaxPlayNumber() {
-        return maxPlayNumber;
+    public Prize getPrize() {
+        return prize;
     }
 
-    public void setMaxPlayNumber(int maxPlayNumber) {
-        this.maxPlayNumber = maxPlayNumber;
+    public void setPrize(Prize prize) {
+        this.prize = prize;
     }
 
-    public List<PrizePeriodicityDTO> getPrizePeriodicityDTOList() {
-        return prizePeriodicityDTOList;
+    public Periodicity getPeriodicity() {
+        return periodicity;
     }
 
-    public void setPrizePeriodicityDTOList(List<PrizePeriodicityDTO> prizePeriodicityDTOList) {
-        this.prizePeriodicityDTOList = prizePeriodicityDTOList;
+    public void setPeriodicity(Periodicity periodicity) {
+        this.periodicity = periodicity;
     }
 
     @Override
     public String toString() {
-        return "PeriodicityDTO{" + "id=" + id + ", period=" + period + ", maxPlayNumber=" + maxPlayNumber + ", prizePeriodicityDTOList=" + prizePeriodicityDTOList + '}';
+        return "PrizePeriodicity{" + "id=" + id + ", numberOfPrizes=" + numberOfPrizes + ", prize=" + prize + ", periodicity=" + periodicity + '}';
     }
 }

@@ -114,7 +114,7 @@ class WazzaUserServiceImpl {
         } catch (IllegalParameterFault ilp) {
             throw ilp;
         }
-        wazzaUserDTO.setPassword(wazzaByteDigester.gsDigest(wazzaUserDTO.getPassword()));
+        wazzaUserDTO.setPassword(wazzaByteDigester.digest(wazzaUserDTO.getPassword()));
         WazzaUser wazzaUser = this.mapper.map(wazzaUserDTO, WazzaUser.class);
         wazzaUser = wazzaUserDAO.persist(wazzaUser);
         return wazzaUser.getId();
@@ -134,7 +134,7 @@ class WazzaUserServiceImpl {
         } else {
             this.checkDuplicateUser(wazzaUserDTO.getUserName());
             WazzaUser wazzaUser = this.mapper.map(wazzaUserDTO, WazzaUser.class);
-            wazzaUser.setPassword(wazzaByteDigester.gsDigest(wazzaUserDTO.getPassword()));
+            wazzaUser.setPassword(wazzaByteDigester.digest(wazzaUserDTO.getPassword()));
             wazzaUserDAO.persist(wazzaUser);
             //TODO: insertOrUpdateWazzaUserAssociations
             idToReturn = wazzaUser.getId();
@@ -144,7 +144,7 @@ class WazzaUserServiceImpl {
 
     private void updatePwdIfNecessary(WazzaUser existingUser, String newPassword) {
         if (newPassword != null && !existingUser.getPassword().equals(newPassword)) {
-            existingUser.setPassword(wazzaByteDigester.gsDigest(newPassword));
+            existingUser.setPassword(wazzaByteDigester.digest(newPassword));
         }
     }
 

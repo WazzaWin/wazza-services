@@ -26,6 +26,12 @@
             <version>${project.version}</version>
         </dependency>
         
+        <dependency>
+            <groupId>com.wazzawin</groupId>
+            <artifactId>service-crypt</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
         <!-- =========================================================== -->
         <!-- ============== HIBERNATE JAVAX PERSISTENCE ================ -->
         <!-- =========================================================== -->

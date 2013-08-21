@@ -40,21 +40,21 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Index;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -102,20 +102,20 @@ public class Prize implements Serializable {
     @Index(name = "PRIZE_INSTANT_WIN_INDEX")
     private boolean instantWin;
     //
+    @OneToMany(mappedBy = "prize", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.DELETE)
+    private List<ContestPrize> contestPrizeList;
+    //
+    @OneToMany(mappedBy = "prize", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.DELETE)
+    private List<PrizePeriodicity> prizePeriodicityList;
+    //
     @ManyToOne(optional = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "company_id", referencedColumnName = "id",
             nullable = false)
     @Index(name = "PRIZE_COMPANY_INDEX")
     private Company company;
-    //
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "PERIODICITY_PRIZE", joinColumns =
-            @JoinColumn(name = "prize_id", referencedColumnName = "id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "periodicity_id", referencedColumnName = "id"))
-    private List<Periodicity> periodicityList;
 
     public Long getId() {
         return id;
@@ -181,17 +181,20 @@ public class Prize implements Serializable {
         this.company = company;
     }
 
-    public List<Periodicity> getPeriodicityList() {
-        return periodicityList;
+    public List<ContestPrize> getContestPrizeList() {
+        return contestPrizeList;
     }
 
-    public void setPeriodicityList(List<Periodicity> periodicityList) {
-        this.periodicityList = periodicityList;
+    public void setContestPrizeList(List<ContestPrize> contestPrizeList) {
+        this.contestPrizeList = contestPrizeList;
     }
 
-    @Override
-    public String toString() {
-        return "Prize{" + "id=" + id + ", name=" + name + ", description=" + description + ", note=" + note + ", urlImage=" + urlImage + ", value=" + prizeValue + ", balance=" + getRemainingPrizes() + ", instantWin=" + instantWin + ", company=" + company + ", periodicityList=" + periodicityList + '}';
+    public List<PrizePeriodicity> getPrizePeriodicityList() {
+        return prizePeriodicityList;
+    }
+
+    public void setPrizePeriodicityList(List<PrizePeriodicity> prizePeriodicityList) {
+        this.prizePeriodicityList = prizePeriodicityList;
     }
 
     /**
@@ -206,5 +209,10 @@ public class Prize implements Serializable {
      */
     public void setRemainingPrizes(int remainingPrizes) {
         this.remainingPrizes = remainingPrizes;
+    }
+
+    @Override
+    public String toString() {
+        return "Prize{" + "id=" + id + ", name=" + name + ", description=" + description + ", note=" + note + ", urlImage=" + urlImage + ", prizeValue=" + prizeValue + ", remainingPrizes=" + remainingPrizes + ", instantWin=" + instantWin + ", contestPrizeList=" + contestPrizeList + ", prizePeriodicityList=" + prizePeriodicityList + ", company=" + company + '}';
     }
 }

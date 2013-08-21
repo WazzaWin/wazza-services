@@ -37,25 +37,21 @@ package com.wazzawin.core.model.algorithms.validation.rules;
 
 import com.wazzawin.core.model.contest.Period;
 import com.wazzawin.core.model.user.UserPlayContest;
-import com.wazzawin.shared.contest.Frequency;
 import java.util.Date;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
-
-
 public class RangeTimeValidationRule implements IValidationRule {
 
     @Override
     public boolean isValid(UserPlayContest upc) {
         Period period = upc.getContest().getPeriod();
         Date d = new Date();
-        if(period.getStartDate().before(d) && period.getEndDate().after(d)){
+        if (period.getStartDate().before(d) && period.getEndDate().after(d)) {
             return true;
         }
         return false;
     }
-    
 }

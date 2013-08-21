@@ -36,6 +36,7 @@
 package com.wazzawin.responce.contest;
 
 import com.wazzawin.responce.customer.CompanyDTO;
+import com.wazzawin.responce.user.UserPlayContestDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -67,6 +68,10 @@ public class ContestDTO implements Serializable {
     private List<ContestInfoDTO> contestInfoList;
     //
     private List<AbstractConfigRuleDTO> configRuleList;
+    //
+    private List<UserPlayContestDTO> userPlayContestDTOList;
+    //
+    private List<ContestPrizeDTO> contestPrizeDTOList;
 
     public Long getId() {
         return id;
@@ -148,8 +153,24 @@ public class ContestDTO implements Serializable {
         this.configRuleList = configRuleList;
     }
 
+    public List<UserPlayContestDTO> getUserPlayContestDTOList() {
+        return userPlayContestDTOList;
+    }
+
+    public void setUserPlayContestDTOList(List<UserPlayContestDTO> userPlayContestDTOList) {
+        this.userPlayContestDTOList = userPlayContestDTOList;
+    }
+
+    public List<ContestPrizeDTO> getContestPrizeDTOList() {
+        return contestPrizeDTOList;
+    }
+
+    public void setContestPrizeDTOList(List<ContestPrizeDTO> contestPrizeDTOList) {
+        this.contestPrizeDTOList = contestPrizeDTOList;
+    }
+
     @Override
     public String toString() {
-        return "ContestDTO{" + "id=" + id + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", contestType=" + contestType + ", period=" + period + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + '}';
+        return "ContestDTO{" + "id=" + id + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", contestType=" + contestType + ", period=" + period + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + ", userPlayContestDTOList=" + userPlayContestDTOList + ", contestPrizeDTOList=" + contestPrizeDTOList + '}';
     }
 }

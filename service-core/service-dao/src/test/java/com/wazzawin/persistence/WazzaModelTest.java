@@ -82,7 +82,7 @@ public class WazzaModelTest {
         this.wazzaUser = new WazzaUser();
         this.wazzaUser.setUserName("giasum");
         this.wazzaUser.setEmail("senatus@gmail.com");
-        this.wazzaUser.setPassword(this.wazzaByteDigester.gsDigest("senatus"));
+        this.wazzaUser.setPassword(this.wazzaByteDigester.digest("senatus"));
         logger.info("Coded Password: " + this.wazzaUser.getPassword());
         this.profile = new Profile();
         this.wazzaUser.setProfile(profile);

@@ -36,18 +36,23 @@
 package com.wazzawin.core.model.contest;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -79,6 +84,10 @@ public class Periodicity implements Serializable {
     @Column(name = "max_play_number", columnDefinition = "INTEGER")
     @Index(name = "PERIODICITY_MAX_PLAY_NUMBER_INDEX")
     private int maxPlayNumber;
+    //
+    @OneToMany(mappedBy = "periodicity", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.DELETE)
+    private List<PrizePeriodicity> prizePeriodicityList;
 
     public Long getId() {
         return id;
@@ -96,8 +105,24 @@ public class Periodicity implements Serializable {
         this.maxPlayNumber = maxPlayNumber;
     }
 
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public List<PrizePeriodicity> getPrizePeriodicityList() {
+        return prizePeriodicityList;
+    }
+
+    public void setPrizePeriodicityList(List<PrizePeriodicity> prizePeriodicityList) {
+        this.prizePeriodicityList = prizePeriodicityList;
+    }
+
     @Override
     public String toString() {
-        return "Periodicity{" + "id=" + id + ", period=" + period + ", maxPlayNumber=" + maxPlayNumber + '}';
+        return "Periodicity{" + "id=" + id + ", period=" + period + ", maxPlayNumber=" + maxPlayNumber + ", prizePeriodicityList=" + prizePeriodicityList + '}';
     }
 }

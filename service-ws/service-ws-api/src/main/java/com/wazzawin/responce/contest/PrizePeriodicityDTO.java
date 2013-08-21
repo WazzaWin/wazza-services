@@ -35,38 +35,24 @@
  */
 package com.wazzawin.responce.contest;
 
-import com.wazzawin.responce.customer.CompanyDTO;
 import java.io.Serializable;
-import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Nazzareno Sileno - WazzaWin Developer Group
  * @email nazzareno.sileno@gmail.com
  */
-@XmlRootElement(name = "prizeDTO")
-public class PrizeDTO implements Serializable {
+@XmlRootElement(name = "prizePeriodicityDTO")
+public class PrizePeriodicityDTO implements Serializable {
 
-    private static final long serialVersionUID = -4908166889598162653L;
+    private static final long serialVersionUID = 6178211731111197055L;
     private Long id;
     //
-    private String name;
+    private int numberOfPrizes;
     //
-    private String description;
+    private PrizeDTO prize;
     //
-    private String note;
-    //
-    private String urlImage;
-    //
-    private int prizeValue;
-    //
-    private int remainingPrizes;
-    //
-    private boolean instantWin;
-    //
-    private CompanyDTO company;
-    //
-    private List<PrizePeriodicityDTO> prizePeriodicityDTOList;
+    private PeriodicityDTO periodicityDTO;
 
     public Long getId() {
         return id;
@@ -76,80 +62,32 @@ public class PrizeDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getNumberOfPrizes() {
+        return numberOfPrizes;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumberOfPrizes(int numberOfPrizes) {
+        this.numberOfPrizes = numberOfPrizes;
     }
 
-    public String getDescription() {
-        return description;
+    public PrizeDTO getPrize() {
+        return prize;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrize(PrizeDTO prize) {
+        this.prize = prize;
     }
 
-    public String getNote() {
-        return note;
+    public PeriodicityDTO getPeriodicityDTO() {
+        return periodicityDTO;
     }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getUrlImage() {
-        return urlImage;
-    }
-
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
-    }
-
-    public int getPrizeValue() {
-        return prizeValue;
-    }
-
-    public void setPrizeValue(int prizeValue) {
-        this.prizeValue = prizeValue;
-    }
-
-    public int getRemainingPrizes() {
-        return remainingPrizes;
-    }
-
-    public void setRemainingPrizes(int remainingPrizes) {
-        this.remainingPrizes = remainingPrizes;
-    }
-
-    public boolean isInstantWin() {
-        return instantWin;
-    }
-
-    public void setInstantWin(boolean instantWin) {
-        this.instantWin = instantWin;
-    }
-
-    public CompanyDTO getCompany() {
-        return company;
-    }
-
-    public void setCompany(CompanyDTO company) {
-        this.company = company;
-    }
-
-    public List<PrizePeriodicityDTO> getPrizePeriodicityDTOList() {
-        return prizePeriodicityDTOList;
-    }
-
-    public void setPrizePeriodicityDTOList(List<PrizePeriodicityDTO> prizePeriodicityDTOList) {
-        this.prizePeriodicityDTOList = prizePeriodicityDTOList;
+    public void setPeriodicityDTO(PeriodicityDTO periodicityDTO) {
+        this.periodicityDTO = periodicityDTO;
     }
 
     @Override
     public String toString() {
-        return "PrizeDTO{" + "id=" + id + ", name=" + name + ", description=" + description + ", note=" + note + ", urlImage=" + urlImage + ", prizeValue=" + prizeValue + ", remainingPrizes=" + remainingPrizes + ", instantWin=" + instantWin + ", company=" + company + ", prizePeriodicityDTOList=" + prizePeriodicityDTOList + '}';
+        return "PrizePeriodicityDTO{" + "id=" + id + ", numberOfPrizes=" + numberOfPrizes + ", prize=" + prize + ", periodicityDTO=" + periodicityDTO + '}';
     }
 }
