@@ -33,37 +33,18 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.validation.rules;
+package com.wazzawin.core.model.algorithms.validation;
 
 import com.wazzawin.core.model.user.UserPlayContest;
-import com.wazzawin.crypt.WazzaByteDigester;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
-public class CodesValidationRule implements IValidationRule {
 
-    private WazzaByteDigester digester = new WazzaByteDigester();
 
-    @Override
-    public boolean isValid(UserPlayContest upc) {
-        if (isValidPlayCode(upc.getPlayCode()) && isValidControlCode(upc.getControlCode(), upc.getPlayCode())) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isValidPlayCode(String playCode) {
-        //TODO Checking Algorithm
-        return true;
-    }
-
-    private boolean isValidControlCode(String controlCode, String playCode) {
-        String md5PlayCode = digester.digest(playCode);
-        if (md5PlayCode.equalsIgnoreCase(controlCode)) {
-            return true;
-        }
-        return false;
-    }
+public interface IValidator {
+ 
+    public boolean isValid(UserPlayContest upc);
+    
 }

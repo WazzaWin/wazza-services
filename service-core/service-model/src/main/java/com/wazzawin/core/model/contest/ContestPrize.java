@@ -73,6 +73,10 @@ public class ContestPrize implements Serializable {
     @Index(name = "CONTEST_PRIZE_NUMBER_OF_PRIZES_INDEX")
     private int numberOfPrizes;
     //
+    @Column(name = "number_of_winners", columnDefinition = "INTEGER")
+    @Index(name = "CONTEST_PRIZE_NUMBER_OF_WINNERS_INDEX")
+    private int numberOfWinners;
+    //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "prize_id", referencedColumnName = "id",
@@ -119,8 +123,22 @@ public class ContestPrize implements Serializable {
         this.contest = contest;
     }
 
+    /**
+     * @return the numberOfWinners
+     */
+    public int getNumberOfWinners() {
+        return numberOfWinners;
+    }
+
+    /**
+     * @param numberOfWinners the numberOfWinners to set
+     */
+    public void setNumberOfWinners(int numberOfWinners) {
+        this.numberOfWinners = numberOfWinners;
+    }
+
     @Override
     public String toString() {
         return "ContestPrize{" + "id=" + id + ", numberOfPrizes=" + numberOfPrizes + ", prize=" + prize + ", contest=" + contest + '}';
-    }
+    }   
 }

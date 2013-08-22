@@ -41,8 +41,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -87,9 +85,9 @@ public class Period implements Serializable {
     @Column(name = "end_date", columnDefinition = "DATE")
     @Index(name = "CONTEST_END_DATE_INDEX")
     private Date endDate;
-    //
-    @Enumerated(EnumType.STRING)
-    private Frequency frequency;
+//    //
+//    @Enumerated(EnumType.STRING)
+//    private Frequency frequency;
     //
     @OneToMany(mappedBy = "period", fetch = FetchType.LAZY, orphanRemoval = true)
     @Cascade(CascadeType.DELETE)
@@ -119,13 +117,13 @@ public class Period implements Serializable {
         this.endDate = endDate;
     }
 
-    public Frequency getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(Frequency frequency) {
-        this.frequency = frequency;
-    }
+//    public Frequency getFrequency() {
+//        return frequency;
+//    }
+//
+//    public void setFrequency(Frequency frequency) {
+//        this.frequency = frequency;
+//    }
 
     public List<Periodicity> getPeriodicityList() {
         return periodicityList;
@@ -137,6 +135,15 @@ public class Period implements Serializable {
 
     @Override
     public String toString() {
-        return "Period{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", frequency=" + frequency + ", periodicityList=" + periodicityList + '}';
+        return "Period{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", periodicityList=" + periodicityList + '}';
+    }
+    
+    public Periodicity getPeriodicityByFrequency(Frequency aFrequency){
+        for(Periodicity p : getPeriodicityList()){
+            if(p.getFrequency().equals(aFrequency)){
+                return p;
+            }
+        }
+        return null;
     }
 }

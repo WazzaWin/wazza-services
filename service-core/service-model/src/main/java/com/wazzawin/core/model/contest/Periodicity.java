@@ -35,10 +35,13 @@
  */
 package com.wazzawin.core.model.contest;
 
+import com.wazzawin.shared.contest.Frequency;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -88,6 +91,9 @@ public class Periodicity implements Serializable {
     @OneToMany(mappedBy = "periodicity", fetch = FetchType.LAZY, orphanRemoval = true)
     @Cascade(CascadeType.DELETE)
     private List<PrizePeriodicity> prizePeriodicityList;
+    //
+    @Enumerated(EnumType.STRING)
+    private Frequency frequency;
 
     public Long getId() {
         return id;
@@ -124,5 +130,19 @@ public class Periodicity implements Serializable {
     @Override
     public String toString() {
         return "Periodicity{" + "id=" + id + ", period=" + period + ", maxPlayNumber=" + maxPlayNumber + ", prizePeriodicityList=" + prizePeriodicityList + '}';
+    }
+
+    /**
+     * @return the frequency
+     */
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
+    /**
+     * @param frequency the frequency to set
+     */
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
     }
 }

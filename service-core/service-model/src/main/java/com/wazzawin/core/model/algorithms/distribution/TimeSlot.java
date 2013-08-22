@@ -33,37 +33,75 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.validation.rules;
+package com.wazzawin.core.model.algorithms.distribution;
 
-import com.wazzawin.core.model.user.UserPlayContest;
-import com.wazzawin.crypt.WazzaByteDigester;
+import com.wazzawin.shared.contest.Frequency;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
-public class CodesValidationRule implements IValidationRule {
 
-    private WazzaByteDigester digester = new WazzaByteDigester();
 
-    @Override
-    public boolean isValid(UserPlayContest upc) {
-        if (isValidPlayCode(upc.getPlayCode()) && isValidControlCode(upc.getControlCode(), upc.getPlayCode())) {
-            return true;
-        }
-        return false;
+public class TimeSlot {
+
+    private Frequency frequency;
+    private int attempts;
+    private int numberOfWinners;
+
+    public TimeSlot(){}
+    
+    public TimeSlot(Frequency f){
+        this.frequency = f;
+    }
+    
+    /**
+     * @return the attempts
+     */
+    public int getAttempts() {
+        return attempts;
     }
 
-    private boolean isValidPlayCode(String playCode) {
-        //TODO Checking Algorithm
-        return true;
+    /**
+     * @param attempts the attempts to set
+     */
+    public void setAttempts(int attempts) {
+        this.attempts = attempts;
     }
 
-    private boolean isValidControlCode(String controlCode, String playCode) {
-        String md5PlayCode = digester.digest(playCode);
-        if (md5PlayCode.equalsIgnoreCase(controlCode)) {
-            return true;
-        }
-        return false;
+    /**
+     * @return the numberOfWinners
+     */
+    public int getNumberOfWinners() {
+        return numberOfWinners;
     }
+
+    /**
+     * @param numberOfWinners the numberOfWinners to set
+     */
+    public void setNumberOfWinners(int numberOfWinners) {
+        this.numberOfWinners = numberOfWinners;
+    }
+
+    /**
+     * @return the frequency
+     */
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
+    /**
+     * @param frequency the frequency to set
+     */
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
+    }
+    
+    public void addAttempt(){
+        this.attempts++;
+    }
+    
+    public void addWinner(){
+        this.numberOfWinners++;
+    }    
 }

@@ -46,7 +46,7 @@ import java.util.List;
  */
 
 
-public class AbstractValidator {
+public class AbstractValidator implements IValidator {
     
     protected List<IValidationRule> rules = new ArrayList<IValidationRule>();
     public boolean isValid(UserPlayContest upc){

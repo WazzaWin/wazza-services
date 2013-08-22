@@ -33,37 +33,69 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.validation.rules;
+package com.wazzawin.core.model.algorithms.distribution;
 
 import com.wazzawin.core.model.user.UserPlayContest;
-import com.wazzawin.crypt.WazzaByteDigester;
+import com.wazzawin.shared.contest.Frequency;
+import java.util.Calendar;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
-public class CodesValidationRule implements IValidationRule {
 
-    private WazzaByteDigester digester = new WazzaByteDigester();
 
-    @Override
-    public boolean isValid(UserPlayContest upc) {
-        if (isValidPlayCode(upc.getPlayCode()) && isValidControlCode(upc.getControlCode(), upc.getPlayCode())) {
-            return true;
+public class MapOfTimeSlot {
+
+    private Map<Frequency, TimeSlot> map = new EnumMap<Frequency, TimeSlot>(Frequency.class);
+    
+    public MapOfTimeSlot(){
+        initializeMap();
+    }
+ 
+    private void initializeMap() {
+        for(Frequency f : Frequency.values()){
+            this.map.put(f, new TimeSlot());
         }
-        return false;
+    }
+    
+    public Set<Frequency> keySet(){
+        return this.map.keySet();
+    }
+    
+    public void add(UserPlayContest upc, Calendar cal, Calendar playDate){
+        playDate.setTime(upc.getPlayDate());
+        updateMap(Frequency.ONE_TIME, upc.isWinning());
+        if(cal.get(Calendar.YEAR) == playDate.get(Calendar.YEAR)){
+            updateMap(Frequency.YEARLY, upc.isWinning());
+            if(cal.get(Calendar.WEEK_OF_YEAR) == playDate.get(Calendar.WEEK_OF_YEAR)){
+                updateMap(Frequency.WEEKLY, upc.isWinning());
+            }
+            if(cal.get(Calendar.MONTH) == playDate.get(Calendar.MONTH)){
+                updateMap(Frequency.MONTHLY, upc.isWinning());
+                if(cal.get(Calendar.DAY_OF_MONTH) == playDate.get(Calendar.DAY_OF_MONTH)){
+                    updateMap(Frequency.DAILY, upc.isWinning());
+                    if(cal.get(Calendar.HOUR) == playDate.get(Calendar.HOUR)){
+                        updateMap(Frequency.HOURLY, upc.isWinning());
+                    }
+                }
+            }
+        }
     }
 
-    private boolean isValidPlayCode(String playCode) {
-        //TODO Checking Algorithm
-        return true;
-    }
-
-    private boolean isValidControlCode(String controlCode, String playCode) {
-        String md5PlayCode = digester.digest(playCode);
-        if (md5PlayCode.equalsIgnoreCase(controlCode)) {
-            return true;
+    private void updateMap(Frequency frequency, boolean isWinning) {
+        TimeSlot val = map.get(frequency);
+        val.addAttempt();
+        if(isWinning){
+            val.addWinner();
         }
-        return false;
+    }    
+
+    public int getAttempts(Frequency f) {
+        TimeSlot ts = this.map.get(f);
+        return ts.getAttempts();
     }
 }

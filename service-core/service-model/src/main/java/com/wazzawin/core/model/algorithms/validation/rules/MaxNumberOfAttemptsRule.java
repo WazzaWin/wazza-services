@@ -35,35 +35,49 @@
  */
 package com.wazzawin.core.model.algorithms.validation.rules;
 
+import com.wazzawin.core.model.algorithms.distribution.MapOfTimeSlot;
+import com.wazzawin.core.model.contest.Periodicity;
 import com.wazzawin.core.model.user.UserPlayContest;
-import com.wazzawin.crypt.WazzaByteDigester;
+import com.wazzawin.shared.contest.Frequency;
+import java.util.Set;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
-public class CodesValidationRule implements IValidationRule {
 
-    private WazzaByteDigester digester = new WazzaByteDigester();
 
+public class MaxNumberOfAttemptsRule implements IValidationRule {
+
+    public static final int NO_LIMITS = 10000;
+    
     @Override
     public boolean isValid(UserPlayContest upc) {
-        if (isValidPlayCode(upc.getPlayCode()) && isValidControlCode(upc.getControlCode(), upc.getPlayCode())) {
-            return true;
+        MapOfTimeSlot mapOfAttempts = upc.getWazzaUser().getAttemptsByContest(upc.getContest());
+        Set<Frequency> keys = mapOfAttempts.keySet();
+        int maxAttempts;
+        int userAttempts;
+        for(Frequency f : keys){
+            maxAttempts = getMaxAttemps(upc, f);
+            if(isLimited(maxAttempts)){
+                userAttempts = mapOfAttempts.getAttempts(f);
+                if(userAttempts > maxAttempts){
+                    return false;
+                }
+            }
         }
-        return false;
-    }
-
-    private boolean isValidPlayCode(String playCode) {
-        //TODO Checking Algorithm
         return true;
     }
 
-    private boolean isValidControlCode(String controlCode, String playCode) {
-        String md5PlayCode = digester.digest(playCode);
-        if (md5PlayCode.equalsIgnoreCase(controlCode)) {
-            return true;
+    private int getMaxAttemps(UserPlayContest upc, Frequency frequency){
+        Periodicity periodicity = upc.getContest().getPeriod().getPeriodicityByFrequency(frequency);
+        if(periodicity == null){
+            return NO_LIMITS;
         }
-        return false;
+        return periodicity.getMaxPlayNumber();
     }
+
+    private boolean isLimited(int value) {
+        return (value == NO_LIMITS) ? false: true;
+    }    
 }

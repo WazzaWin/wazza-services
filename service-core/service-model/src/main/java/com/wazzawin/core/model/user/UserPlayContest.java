@@ -36,6 +36,7 @@
 package com.wazzawin.core.model.user;
 
 import com.wazzawin.core.model.contest.Contest;
+import com.wazzawin.core.model.contest.Prize;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -45,6 +46,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -105,6 +107,11 @@ public class UserPlayContest implements Serializable {
     @Column(name = "winning", columnDefinition = "BOOL DEFAULT FALSE")
     @Index(name = "USER_PLAY_CONTEST_WINNING_INDEX")
     private boolean winning;
+    //
+    @OneToOne(optional = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "prize", referencedColumnName = "id", nullable = true)
+    private Prize prize;
 
     public Long getId() {
         return id;
@@ -165,5 +172,19 @@ public class UserPlayContest implements Serializable {
     @Override
     public String toString() {
         return "UserPlayContest{" + "id=" + id + ", user=" + wazzaUser + ", contest=" + contest + ", playDate=" + playDate + ", playCode=" + playCode + ", controlCode=" + controlCode + ", winning=" + winning + '}';
+    }
+
+    /**
+     * @return the prize
+     */
+    public Prize getPrize() {
+        return prize;
+    }
+
+    /**
+     * @param prize the prize to set
+     */
+    public void setPrize(Prize prize) {
+        this.prize = prize;
     }
 }

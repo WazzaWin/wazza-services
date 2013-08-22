@@ -35,6 +35,11 @@
  */
 package com.wazzawin.core.model.algorithms;
 
+import com.wazzawin.core.model.algorithms.distribution.IDistributor;
+import com.wazzawin.core.model.algorithms.validation.IValidator;
+import com.wazzawin.core.model.contest.Prize;
+import com.wazzawin.core.model.user.UserPlayContest;
+
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
@@ -42,5 +47,26 @@ package com.wazzawin.core.model.algorithms;
 
 
 public class Checker {
+
+    private IValidator validator;
+    private IDistributor distributor;
     
+    public boolean isWinner(UserPlayContest upc){
+        if(validator.isValid(upc)){
+            Prize prize = distributor.getPrize(upc);
+            if(prize != null){
+                upc.setPrize(prize);
+                upc.setWinning(true);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param validator the validator to set
+     */
+    public void setValidator(IValidator validator) {
+        this.validator = validator;
+    }
 }

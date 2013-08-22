@@ -36,6 +36,7 @@
 package com.wazzawin.core.model.algorithms.validation;
 
 import com.wazzawin.core.model.algorithms.validation.rules.CodesValidationRule;
+import com.wazzawin.core.model.algorithms.validation.rules.MaxNumberOfAttemptsRule;
 import com.wazzawin.core.model.algorithms.validation.rules.UserValidationRule;
 import com.wazzawin.core.model.algorithms.validation.rules.RangeTimeValidationRule;
 
@@ -52,5 +53,6 @@ public class StandardValidator extends AbstractValidator {
         rules.add(new UserValidationRule());
         rules.add(new CodesValidationRule());
         rules.add(new RangeTimeValidationRule());
+        rules.add(new MaxNumberOfAttemptsRule());
     }
 }
