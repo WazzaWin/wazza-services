@@ -112,6 +112,11 @@ public class UserPlayContest implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "prize", referencedColumnName = "id", nullable = true)
     private Prize prize;
+    //
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "ticket", referencedColumnName = "id", nullable = true)
+    private Ticket ticket;
 
     public Long getId() {
         return id;
@@ -169,9 +174,12 @@ public class UserPlayContest implements Serializable {
         this.winning = winning;
     }
 
-    @Override
-    public String toString() {
-        return "UserPlayContest{" + "id=" + id + ", user=" + wazzaUser + ", contest=" + contest + ", playDate=" + playDate + ", playCode=" + playCode + ", controlCode=" + controlCode + ", winning=" + winning + '}';
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 
     /**
@@ -186,5 +194,10 @@ public class UserPlayContest implements Serializable {
      */
     public void setPrize(Prize prize) {
         this.prize = prize;
+    }
+
+    @Override
+    public String toString() {
+        return "UserPlayContest{" + "id=" + id + ", wazzaUser=" + wazzaUser + ", contest=" + contest + ", playDate=" + playDate + ", playCode=" + playCode + ", controlCode=" + controlCode + ", winning=" + winning + ", prize=" + prize + ", ticket=" + ticket + '}';
     }
 }
