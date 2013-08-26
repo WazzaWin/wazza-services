@@ -110,12 +110,12 @@ public class UserPlayContest implements Serializable {
     //
     @OneToOne(optional = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "prize", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "prize_id", referencedColumnName = "id", nullable = true)
     private Prize prize;
     //
     @OneToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "ticket", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "ticket_it", referencedColumnName = "id", nullable = true)
     private Ticket ticket;
 
     public Long getId() {

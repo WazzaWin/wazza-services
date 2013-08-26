@@ -112,7 +112,7 @@ public class WazzaUser implements Serializable {
     //
     @OneToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "profile", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id", nullable = false)
     @Index(name = "WAZZA_USER_PROFILE_INDEX")
     private Profile profile;
     //

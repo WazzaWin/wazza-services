@@ -69,17 +69,17 @@ public class TicketItem implements Serializable {
     @SequenceGenerator(name = "TICKET_ITEM_SEQ", sequenceName = "TICKET_ITEM_SEQ")
     private Long id;
     //
-    @Column(name = "ticket_item_name", columnDefinition = "VARCHAR(128)", nullable = false)
+    @Column(name = "name", columnDefinition = "VARCHAR(256)", nullable = false)
     @Index(name = "TICKET_ITEM_NAME_INDEX")
-    private String itemName;
+    private String name;
     //
-    @Column(name = "ticket_item_price")
+    @Column(name = "price")
     @Index(name = "TICKET_ITEM_PRICE_INDEX")
-    private Long itemPrice;
+    private Long price;
     //This field must be generalized using Unit of Measure
-    @Column(name = "ticket_item_quantity", columnDefinition = "INTEGER")
+    @Column(name = "quantity", columnDefinition = "INTEGER")
     @Index(name = "TICKET_ITEM_AMOUNT_INDEX")
-    private int itemQuantity;
+    private int quantity;
     //
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -96,28 +96,28 @@ public class TicketItem implements Serializable {
         this.id = id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Long getItemPrice() {
-        return itemPrice;
+    public Long getPrice() {
+        return price;
     }
 
-    public void setItemPrice(Long itemPrice) {
-        this.itemPrice = itemPrice;
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
-    public int getItemQuantity() {
-        return itemQuantity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setItemQuantity(int itemQuantity) {
-        this.itemQuantity = itemQuantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Ticket getTicket() {
@@ -130,6 +130,6 @@ public class TicketItem implements Serializable {
 
     @Override
     public String toString() {
-        return "TicketItem{" + "id=" + id + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", itemQuantity=" + itemQuantity + ", ticket=" + ticket + '}';
+        return "TicketItem{" + "id=" + id + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", ticket=" + ticket + '}';
     }
 }

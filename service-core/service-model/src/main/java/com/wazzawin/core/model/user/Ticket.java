@@ -78,17 +78,17 @@ public class Ticket implements Serializable {
     //data e ora dello scontrino 
     @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "timestamp")
-    @Column(name = "ticket_date", columnDefinition = "DATE")
+    @Column(name = "date", columnDefinition = "DATE")
     @Index(name = "TICKET_DATE_INDEX")
     private Date ticketDate;
     //
-    @Column(name = "ticket_number", columnDefinition = "INTEGER")
+    @Column(name = "number", columnDefinition = "INTEGER")
     @Index(name = "TICKET_NUMBER_INDEX")
-    private int ticketNumber;
+    private int number;
     //
-    @Column(name = "ticket_amount", columnDefinition = "VARCHAR(254)")
+    @Column(name = "amount", columnDefinition = "VARCHAR(254)")
     @Index(name = "TICKET_AMOUNT_INDEX")
-    private Long ticketAmount;
+    private Long amount;
     //
     @Column(name = "image")
     @Lob
@@ -115,20 +115,20 @@ public class Ticket implements Serializable {
         this.ticketDate = ticketDate;
     }
 
-    public int getTicketNumber() {
-        return ticketNumber;
+    public int getNumber() {
+        return number;
     }
 
-    public void setTicketNumber(int ticketNumber) {
-        this.ticketNumber = ticketNumber;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
-    public Long getTicketAmount() {
-        return ticketAmount;
+    public Long getAmount() {
+        return amount;
     }
 
-    public void setTicketAmount(Long ticketAmount) {
-        this.ticketAmount = ticketAmount;
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 
     public byte[] getImage() {
@@ -149,6 +149,6 @@ public class Ticket implements Serializable {
 
     @Override
     public String toString() {
-        return "Ticket{" + "id=" + id + ", ticketDate=" + ticketDate + ", ticketNumber=" + ticketNumber + ", ticketAmount=" + ticketAmount + ", image=" + image + ", ticketItemList=" + ticketItemList + '}';
+        return "Ticket{" + "id=" + id + ", ticketDate=" + ticketDate + ", number=" + number + ", amount=" + amount + ", image=" + image + ", ticketItemList=" + ticketItemList + '}';
     }
 }
