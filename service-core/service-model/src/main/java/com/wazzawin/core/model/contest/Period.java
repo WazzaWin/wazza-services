@@ -37,6 +37,7 @@ package com.wazzawin.core.model.contest;
 
 import com.wazzawin.shared.contest.Frequency;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -145,5 +146,15 @@ public class Period implements Serializable {
             }
         }
         return null;
+    }
+    
+    public List<Periodicity> getPeriodicityListWithPrizes(){
+        List<Periodicity> list = new ArrayList<Periodicity>();
+        for(Periodicity p : periodicityList){
+            if(p.hasPrizes()){
+                list.add(p);
+            }
+        }
+        return list;
     }
 }

@@ -145,4 +145,11 @@ public class Periodicity implements Serializable {
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
     }
+
+    public boolean hasPrizes(){
+        if(this.prizePeriodicityList.isEmpty()){
+            return false;
+        }
+        return true;
+    }
 }

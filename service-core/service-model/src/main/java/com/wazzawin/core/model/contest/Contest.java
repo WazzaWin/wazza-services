@@ -35,17 +35,14 @@
  */
 package com.wazzawin.core.model.contest;
 
-import com.wazzawin.core.model.algorithms.distribution.MapOfTimeSlot;
-import com.wazzawin.core.model.algorithms.distribution.TimeSlot;
+import com.wazzawin.core.model.algorithms.common.MapOfPrizes;
+import com.wazzawin.core.model.algorithms.common.MapOfTimeSlot;
 import com.wazzawin.core.model.customer.Company;
 import com.wazzawin.core.model.user.UserPlayContest;
-import com.wazzawin.shared.contest.Frequency;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.EnumMap;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -240,10 +237,20 @@ public class Contest implements Serializable {
     public MapOfTimeSlot getMapOfAttemptsAndWinners(){
         MapOfTimeSlot mapOfTimeSlots = new MapOfTimeSlot();
         Calendar cal = new GregorianCalendar();
-        Calendar playDate = new GregorianCalendar();
         for(UserPlayContest upc : getUserPlayContestList()){
-            mapOfTimeSlots.add(upc, cal, playDate);
+            mapOfTimeSlots.add(upc, cal);
         }
         return mapOfTimeSlots;
     }
+
+    public MapOfPrizes getMapOfPrizes(){
+        MapOfPrizes mapOfprizes = new MapOfPrizes();
+        for(UserPlayContest upc : getUserPlayContestList()){
+            if(upc.isWinning()){
+                mapOfprizes.add(upc.getPrize());
+            }
+        }
+        return mapOfprizes;
+    }
+    
 }

@@ -33,25 +33,31 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.distribution;
+package com.wazzawin.core.model.algorithms.common;
 
-import com.wazzawin.core.model.contest.Contest;
 import com.wazzawin.core.model.contest.Prize;
-import com.wazzawin.core.model.user.UserPlayContest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
+public class MapOfPrizes {
 
-
-public abstract class AbstractDistributor implements IDistributor {
-
-    @Override
-    public Prize getPrize(UserPlayContest upc) {
-        Contest c = upc.getContest();
-        
-        return null;
+    private Map<Prize,Integer> map = new HashMap<Prize,Integer>();
+    
+    public void add(Prize p){
+        Integer pp = map.get(p);
+        if(pp == null){
+            add(p, new Integer(1));
+            return;
+        }
+        pp++;
+        add(p, pp);
     }
     
+    public void add(Prize p, Integer pp){
+        map.put(p, pp);
+    }
 }

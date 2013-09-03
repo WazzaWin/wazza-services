@@ -37,10 +37,13 @@ package com.wazzawin.core.model.user;
 
 import com.wazzawin.core.model.contest.Contest;
 import com.wazzawin.core.model.contest.Prize;
+import com.wazzawin.shared.contest.Frequency;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -117,6 +120,9 @@ public class UserPlayContest implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ticket_it", referencedColumnName = "id", nullable = true)
     private Ticket ticket;
+    //
+    @Enumerated(EnumType.STRING)
+    private Frequency frequency;
 
     public Long getId() {
         return id;
@@ -199,5 +205,19 @@ public class UserPlayContest implements Serializable {
     @Override
     public String toString() {
         return "UserPlayContest{" + "id=" + id + ", wazzaUser=" + wazzaUser + ", contest=" + contest + ", playDate=" + playDate + ", playCode=" + playCode + ", controlCode=" + controlCode + ", winning=" + winning + ", prize=" + prize + ", ticket=" + ticket + '}';
+    }
+
+    /**
+     * @return the frequency
+     */
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
+    /**
+     * @param frequency the frequency to set
+     */
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
     }
 }

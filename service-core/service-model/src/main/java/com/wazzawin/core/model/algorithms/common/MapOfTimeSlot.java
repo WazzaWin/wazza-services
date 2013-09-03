@@ -33,12 +33,13 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.distribution;
+package com.wazzawin.core.model.algorithms.common;
 
 import com.wazzawin.core.model.user.UserPlayContest;
 import com.wazzawin.shared.contest.Frequency;
 import java.util.Calendar;
 import java.util.EnumMap;
+import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,6 +52,7 @@ import java.util.Set;
 public class MapOfTimeSlot {
 
     private Map<Frequency, TimeSlot> map = new EnumMap<Frequency, TimeSlot>(Frequency.class);
+    private Calendar playDate = new GregorianCalendar();
     
     public MapOfTimeSlot(){
         initializeMap();
@@ -66,7 +68,7 @@ public class MapOfTimeSlot {
         return this.map.keySet();
     }
     
-    public void add(UserPlayContest upc, Calendar cal, Calendar playDate){
+    public void add(UserPlayContest upc, Calendar cal){
         playDate.setTime(upc.getPlayDate());
         updateMap(Frequency.ONE_TIME, upc.isWinning());
         if(cal.get(Calendar.YEAR) == playDate.get(Calendar.YEAR)){

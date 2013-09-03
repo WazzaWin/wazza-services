@@ -39,6 +39,7 @@ import com.wazzawin.core.model.algorithms.distribution.IDistributor;
 import com.wazzawin.core.model.algorithms.validation.IValidator;
 import com.wazzawin.core.model.contest.Prize;
 import com.wazzawin.core.model.user.UserPlayContest;
+import com.wazzawin.shared.contest.Frequency;
 
 /**
  *
@@ -53,9 +54,11 @@ public class Checker {
     
     public boolean isWinner(UserPlayContest upc){
         if(validator.isValid(upc)){
-            Prize prize = distributor.getPrize(upc);
+            Frequency f = distributor.getFrequency();
+            Prize prize = distributor.chooseAPrize(upc);
             if(prize != null){
                 upc.setPrize(prize);
+                upc.setFrequency(f);
                 upc.setWinning(true);
                 return true;
             }

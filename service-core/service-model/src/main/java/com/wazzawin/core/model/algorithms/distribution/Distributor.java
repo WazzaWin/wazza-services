@@ -35,7 +35,14 @@
  */
 package com.wazzawin.core.model.algorithms.distribution;
 
+import com.wazzawin.core.model.algorithms.common.MapOfPrizes;
+import com.wazzawin.core.model.algorithms.common.MapOfTimeSlot;
+import com.wazzawin.core.model.contest.Contest;
+import com.wazzawin.core.model.contest.Periodicity;
+import com.wazzawin.core.model.contest.Prize;
+import com.wazzawin.core.model.user.UserPlayContest;
 import com.wazzawin.shared.contest.Frequency;
+import java.util.List;
 
 /**
  *
@@ -43,65 +50,37 @@ import com.wazzawin.shared.contest.Frequency;
  */
 
 
-public class TimeSlot {
+public abstract class Distributor implements IDistributor {
 
-    private Frequency frequency;
-    private int attempts;
-    private int numberOfWinners;
-
-    public TimeSlot(){}
+    private boolean assignNotAssignedPrizes;
     
-    public TimeSlot(Frequency f){
-        this.frequency = f;
+    @Override
+    public Prize chooseAPrize(UserPlayContest upc) {
+        Contest c = upc.getContest();
+        MapOfTimeSlot mapOfAttemptsAndWinners = c.getMapOfAttemptsAndWinners();
+        MapOfPrizes mapOfPrizes = c.getMapOfPrizes();
+        
+        List<Periodicity> listOfPeriodicityWithPrizes = c.getPeriod().getPeriodicityListWithPrizes();
+        
+
+        return null;
     }
-    
+
+    public Frequency getFrequncy(){
+        return Frequency.ONE_TIME;
+    }
     /**
-     * @return the attempts
+     * @return the assignNotAssignedPrizes
      */
-    public int getAttempts() {
-        return attempts;
+    public boolean isAssignNotAssignedPrizes() {
+        return assignNotAssignedPrizes;
     }
 
     /**
-     * @param attempts the attempts to set
+     * @param assignNotAssignedPrizes the assignNotAssignedPrizes to set
      */
-    public void setAttempts(int attempts) {
-        this.attempts = attempts;
-    }
-
-    /**
-     * @return the numberOfWinners
-     */
-    public int getNumberOfWinners() {
-        return numberOfWinners;
-    }
-
-    /**
-     * @param numberOfWinners the numberOfWinners to set
-     */
-    public void setNumberOfWinners(int numberOfWinners) {
-        this.numberOfWinners = numberOfWinners;
-    }
-
-    /**
-     * @return the frequency
-     */
-    public Frequency getFrequency() {
-        return frequency;
-    }
-
-    /**
-     * @param frequency the frequency to set
-     */
-    public void setFrequency(Frequency frequency) {
-        this.frequency = frequency;
+    public void setAssignNotAssignedPrizes(boolean assignNotAssignedPrizes) {
+        this.assignNotAssignedPrizes = assignNotAssignedPrizes;
     }
     
-    public void addAttempt(){
-        this.attempts++;
-    }
-    
-    public void addWinner(){
-        this.numberOfWinners++;
-    }    
 }

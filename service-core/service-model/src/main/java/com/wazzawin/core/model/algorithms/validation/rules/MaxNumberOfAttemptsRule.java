@@ -35,7 +35,7 @@
  */
 package com.wazzawin.core.model.algorithms.validation.rules;
 
-import com.wazzawin.core.model.algorithms.distribution.MapOfTimeSlot;
+import com.wazzawin.core.model.algorithms.common.MapOfTimeSlot;
 import com.wazzawin.core.model.contest.Periodicity;
 import com.wazzawin.core.model.user.UserPlayContest;
 import com.wazzawin.shared.contest.Frequency;

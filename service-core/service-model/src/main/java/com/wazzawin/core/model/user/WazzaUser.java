@@ -35,7 +35,7 @@
  */
 package com.wazzawin.core.model.user;
 
-import com.wazzawin.core.model.algorithms.distribution.MapOfTimeSlot;
+import com.wazzawin.core.model.algorithms.common.MapOfTimeSlot;
 import com.wazzawin.core.model.contest.Contest;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -197,15 +197,14 @@ public class WazzaUser implements Serializable {
         return "WazzaUser{" + "id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password + ", phoneNumber=" + phoneNumber + ", enabled=" + enabled + ", lastLogin=" + lastLogin + ", profile=" + profile + ", userPlayContestList=" + userPlayContestList + '}';
     }
 
-    public MapOfTimeSlot getAttemptsByContest(Contest contest) {
+    public MapOfTimeSlot getAttemptsByContest(Contest contest){
         MapOfTimeSlot mapOfAttemps = new MapOfTimeSlot();
         Calendar cal = new GregorianCalendar();
-        Calendar playDate = new GregorianCalendar();
-        for (UserPlayContest upc : getUserPlayContestList()) {
-            if (upc.getContest().equals(contest)) {
-                mapOfAttemps.add(upc, cal, playDate);
+        for(UserPlayContest upc : getUserPlayContestList()){
+            if(upc.getContest().equals(contest)){
+                mapOfAttemps.add(upc, cal);
             }
         }
         return mapOfAttemps;
-    }
+    }        
 }
