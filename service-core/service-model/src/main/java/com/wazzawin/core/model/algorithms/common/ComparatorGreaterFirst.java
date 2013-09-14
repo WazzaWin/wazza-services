@@ -35,90 +35,24 @@
  */
 package com.wazzawin.core.model.algorithms.common;
 
-import com.wazzawin.shared.contest.Frequency;
+import com.wazzawin.core.model.contest.Prize;
+import java.util.Comparator;
+import java.util.Map;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
+public class ComparatorGreaterFirst extends AbstractPrizeComparator {
 
-
-public class TimeSlot {
-
-    private Frequency frequency;
-    private int attempts;
-    private int numberOfWinners;
-    private MapOfPrizes prizes = new MapOfPrizes();
-    
-    public TimeSlot(){}
-    
-    public TimeSlot(Frequency f){
-        this.frequency = f;
+    @Override
+    public int compare(Prize o1, Prize o2) {
+        if(mapRemainingPrizes.get(o1) > mapRemainingPrizes.get(o2)){
+            return -1;
+        } else if(mapRemainingPrizes.get(o1) == mapRemainingPrizes.get(o2)){
+            return 0;
+        }
+        return 1;
     }
-    
-    /**
-     * @return the attempts
-     */
-    public int getAttempts() {
-        return attempts;
-    }
-
-    /**
-     * @param attempts the attempts to set
-     */
-    public void setAttempts(int attempts) {
-        this.attempts = attempts;
-    }
-
-    /**
-     * @return the numberOfWinners
-     */
-    public int getNumberOfWinners() {
-        return numberOfWinners;
-    }
-
-    /**
-     * @param numberOfWinners the numberOfWinners to set
-     */
-    public void setNumberOfWinners(int numberOfWinners) {
-        this.numberOfWinners = numberOfWinners;
-    }
-
-    /**
-     * @return the frequency
-     */
-    public Frequency getFrequency() {
-        return frequency;
-    }
-
-    /**
-     * @param frequency the frequency to set
-     */
-    public void setFrequency(Frequency frequency) {
-        this.frequency = frequency;
-    }
-    
-    public void addAttempt(){
-        this.attempts++;
-    }
-    
-    public void addWinner(){
-        this.numberOfWinners++;
-    }    
-
-    /**
-     * @return the prizes
-     */
-    public MapOfPrizes getMapOfPrizes() {
-        return prizes;
-    }
-
-    /**
-     * @param prizes the prizes to set
-     */
-    public void setPrizes(MapOfPrizes prizes) {
-        this.prizes = prizes;
-    }
-    
     
 }

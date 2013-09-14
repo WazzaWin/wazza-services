@@ -35,7 +35,7 @@
  */
 package com.wazzawin.core.model.algorithms;
 
-import com.wazzawin.core.model.algorithms.distribution.IDistributor;
+import com.wazzawin.core.model.algorithms.distribution.Distributor;
 import com.wazzawin.core.model.algorithms.validation.IValidator;
 import com.wazzawin.core.model.contest.Prize;
 import com.wazzawin.core.model.user.UserPlayContest;
@@ -50,20 +50,23 @@ import com.wazzawin.shared.contest.Frequency;
 public class Checker {
 
     private IValidator validator;
-    private IDistributor distributor;
+    private Distributor distributor;
     
     public boolean isWinner(UserPlayContest upc){
-        if(validator.isValid(upc)){
-            Frequency f = distributor.getFrequency();
-            Prize prize = distributor.chooseAPrize(upc);
-            if(prize != null){
-                upc.setPrize(prize);
-                upc.setFrequency(f);
-                upc.setWinning(true);
-                return true;
-            }
+        if(!validator.isValid(upc)){
+            return false;
         }
-        return false;
+        Prize prize = distributor.chooseAPrize(upc);
+        if (prize == null) {
+            return false;
+        }
+        //TODO check if the prize is still available by querying DB
+        Frequency f = distributor.getFrequency();
+        upc.setPrize(prize);
+        upc.setFrequency(f);
+        upc.setWinning(true);
+        return true;
+        
     }
 
     /**
@@ -71,5 +74,12 @@ public class Checker {
      */
     public void setValidator(IValidator validator) {
         this.validator = validator;
+    }
+
+    /**
+     * @param distributor the distributor to set
+     */
+    public void setDistributor(Distributor distributor) {
+        this.distributor = distributor;
     }
 }

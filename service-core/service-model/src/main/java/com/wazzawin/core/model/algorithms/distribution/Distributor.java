@@ -35,39 +35,52 @@
  */
 package com.wazzawin.core.model.algorithms.distribution;
 
-import com.wazzawin.core.model.algorithms.common.MapOfPrizes;
+import com.wazzawin.core.model.algorithms.common.AbstractPrizeComparator;
 import com.wazzawin.core.model.algorithms.common.MapOfTimeSlot;
 import com.wazzawin.core.model.contest.Contest;
-import com.wazzawin.core.model.contest.Periodicity;
 import com.wazzawin.core.model.contest.Prize;
 import com.wazzawin.core.model.user.UserPlayContest;
 import com.wazzawin.shared.contest.Frequency;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
 
-
-public abstract class Distributor implements IDistributor {
+public class Distributor {
 
     private boolean assignNotAssignedPrizes;
+    private Frequency frequency;
+    private ProbabilityInterval probabilityInterval;
+    private AbstractPrizeComparator prizeComp;
     
-    @Override
+    public Distributor(boolean assignNotAssigned, ProbabilityInterval pi, AbstractPrizeComparator abc){
+        this.assignNotAssignedPrizes = assignNotAssigned;
+        this.probabilityInterval = probabilityInterval;
+        this.prizeComp = abc;
+    }
+    
     public Prize chooseAPrize(UserPlayContest upc) {
         Contest c = upc.getContest();
-        MapOfTimeSlot mapOfAttemptsAndWinners = c.getMapOfAttemptsAndWinners();
-        MapOfPrizes mapOfPrizes = c.getMapOfPrizes();
-        
-        List<Periodicity> listOfPeriodicityWithPrizes = c.getPeriod().getPeriodicityListWithPrizes();
-        
-
-        return null;
+        MapOfTimeSlot mapOfTimeSlot = c.getMapOfTimeSlot();
+        chooseAndSetAFrequency(mapOfTimeSlot, upc.getPlayDate().getTime());
+        double valRand = Math.random();
+        double valProb = probabilityInterval.getProbabilityByCurrentDate(upc.getContest().getPeriod(), upc.getPlayDate());
+        Prize p = null;
+        if(valProb > valRand){
+            p = mapOfTimeSlot.getMapOfPrizes(getFrequency()).pickUpAPrize(prizeComp);
+        }
+        if(p == null && isAssignNotAssignedPrizes()){
+            //TODO try to assign not assigned prizes
+            
+        }
+        return p;
     }
 
     public Frequency getFrequncy(){
-        return Frequency.ONE_TIME;
+        return getFrequency();
     }
     /**
      * @return the assignNotAssignedPrizes
@@ -82,5 +95,47 @@ public abstract class Distributor implements IDistributor {
     public void setAssignNotAssignedPrizes(boolean assignNotAssignedPrizes) {
         this.assignNotAssignedPrizes = assignNotAssignedPrizes;
     }
-    
+
+    /**
+     * @return the probabilityInterval
+     */
+    public ProbabilityInterval getProbabilityInterval() {
+        return probabilityInterval;
+    }
+
+    /**
+     * @param probabilityInterval the probabilityInterval to set
+     */
+    public void setProbabilityInterval(ProbabilityInterval probabilityInterval) {
+        this.probabilityInterval = probabilityInterval;
+    }
+
+    private void chooseAndSetAFrequency(MapOfTimeSlot mapOfTimeSlot, long seed) {
+        List<Frequency> availableFrequencies = mapOfTimeSlot.getAvailableFrequencies();
+        Random r = new Random(seed);
+        int randomic = r.nextInt(availableFrequencies.size());
+        frequency = availableFrequencies.get(randomic);
+    }
+
+    /**
+     * @return the prizeComp
+     */
+    public AbstractPrizeComparator getPrizeComp() {
+        return prizeComp;
+    }
+
+    /**
+     * @param prizeComp the prizeComp to set
+     */
+    public void setPrizeComp(AbstractPrizeComparator prizeComp) {
+        this.prizeComp = prizeComp;
+    }
+
+    /**
+     * @return the frequency
+     */
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
 }

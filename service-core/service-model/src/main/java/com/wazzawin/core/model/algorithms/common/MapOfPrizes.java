@@ -35,8 +35,13 @@
  */
 package com.wazzawin.core.model.algorithms.common;
 
+import com.wazzawin.core.model.contest.Periodicity;
 import com.wazzawin.core.model.contest.Prize;
+import com.wazzawin.core.model.contest.PrizePeriodicity;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +51,8 @@ import java.util.Map;
 public class MapOfPrizes {
 
     private Map<Prize,Integer> map = new HashMap<Prize,Integer>();
+    private Map<Prize,Integer> mapConstraints = new HashMap<Prize,Integer>();
+    private Map<Prize, Integer> mapRemaining = new HashMap<Prize, Integer>();
     
     public void add(Prize p){
         Integer pp = map.get(p);
@@ -59,5 +66,45 @@ public class MapOfPrizes {
     
     public void add(Prize p, Integer pp){
         map.put(p, pp);
+    }
+    
+    public int getOccurrences(Prize p){
+        return map.get(p);
+    }
+
+    public List<Prize> getRemainingPrizes(){
+        mapRemaining.clear();
+        List<Prize> list = new ArrayList<Prize>();
+        int items = 0;
+        for(Prize p : map.keySet()){
+            items = getRemainingItems(p);
+            if(items > 0){
+                mapRemaining.put(p, items);
+                list.add(p);
+            }
+        }
+        return list;
+    }
+    
+    public int getRemainingItems(Prize p){
+        Integer occurences = getOccurrences(p);
+        Integer numberOfItems = mapConstraints.get(p);
+        return numberOfItems - occurences;
+    }
+
+    public void addPeriodicityConstraints(Periodicity periodicity) {
+        this.mapConstraints.clear();
+        Prize prize;
+        for(PrizePeriodicity pp : periodicity.getPrizePeriodicityList()){
+            prize = pp.getPrize();
+            mapConstraints.put(prize, new Integer(pp.getNumberOfPrizes()));
+        }
+    }
+
+    public Prize pickUpAPrize(AbstractPrizeComparator comp) {
+        List<Prize> availablePrizes = this.getRemainingPrizes();
+        comp.setMapRemainingPrizes(mapRemaining);
+        Collections.sort(availablePrizes, comp);
+        return availablePrizes.get(0);
     }
 }

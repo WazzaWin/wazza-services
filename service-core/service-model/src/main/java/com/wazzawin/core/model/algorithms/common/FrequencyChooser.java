@@ -33,21 +33,19 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.distribution;
+package com.wazzawin.core.model.algorithms.common;
 
-import com.wazzawin.core.model.contest.Prize;
-import com.wazzawin.core.model.user.UserPlayContest;
+import com.wazzawin.core.model.contest.Periodicity;
 import com.wazzawin.shared.contest.Frequency;
+import java.util.List;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
+public class FrequencyChooser {
 
-public interface IDistributor {
-    
-    public Prize chooseAPrize(UserPlayContest upc);
-    
-    public Frequency getFrequency();
-
+    public Frequency chooseAFrequency(MapOfTimeSlot map, List<Periodicity> list){
+        return null;
+    }
 }

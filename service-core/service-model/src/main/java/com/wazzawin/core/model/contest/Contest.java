@@ -234,23 +234,13 @@ public class Contest implements Serializable {
         return "Contest{" + "id=" + id + ", minCoin=" + minCoin + ", urlAddress=" + urlAddress + ", numberOfWin=" + numberOfWin + ", regulation=" + regulation + ", userPlayContestList=" + userPlayContestList + ", contestPrizeList=" + contestPrizeList + ", contestType=" + contestType + ", period=" + period + ", company=" + company + ", contestInfoList=" + contestInfoList + ", configRuleList=" + configRuleList + '}';
     }
     
-    public MapOfTimeSlot getMapOfAttemptsAndWinners(){
+    public MapOfTimeSlot getMapOfTimeSlot(){
         MapOfTimeSlot mapOfTimeSlots = new MapOfTimeSlot();
         Calendar cal = new GregorianCalendar();
         for(UserPlayContest upc : getUserPlayContestList()){
             mapOfTimeSlots.add(upc, cal);
         }
+        mapOfTimeSlots.addPeriodConstraints(period);
         return mapOfTimeSlots;
     }
-
-    public MapOfPrizes getMapOfPrizes(){
-        MapOfPrizes mapOfprizes = new MapOfPrizes();
-        for(UserPlayContest upc : getUserPlayContestList()){
-            if(upc.isWinning()){
-                mapOfprizes.add(upc.getPrize());
-            }
-        }
-        return mapOfprizes;
-    }
-    
 }

@@ -33,92 +33,51 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.common;
+package com.wazzawin.core.model.algorithms.distribution;
 
-import com.wazzawin.shared.contest.Frequency;
+import com.wazzawin.core.model.contest.Period;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
+public class ProbabilityInterval {
 
-
-public class TimeSlot {
-
-    private Frequency frequency;
-    private int attempts;
-    private int numberOfWinners;
-    private MapOfPrizes prizes = new MapOfPrizes();
+    private List<Double> list = new ArrayList<Double>();
     
-    public TimeSlot(){}
-    
-    public TimeSlot(Frequency f){
-        this.frequency = f;
-    }
-    
-    /**
-     * @return the attempts
-     */
-    public int getAttempts() {
-        return attempts;
-    }
-
-    /**
-     * @param attempts the attempts to set
-     */
-    public void setAttempts(int attempts) {
-        this.attempts = attempts;
-    }
-
-    /**
-     * @return the numberOfWinners
-     */
-    public int getNumberOfWinners() {
-        return numberOfWinners;
-    }
-
-    /**
-     * @param numberOfWinners the numberOfWinners to set
-     */
-    public void setNumberOfWinners(int numberOfWinners) {
-        this.numberOfWinners = numberOfWinners;
-    }
-
-    /**
-     * @return the frequency
-     */
-    public Frequency getFrequency() {
-        return frequency;
-    }
-
-    /**
-     * @param frequency the frequency to set
-     */
-    public void setFrequency(Frequency frequency) {
-        this.frequency = frequency;
+    public void addProbability(double d){
+        if(d < 0){
+            d = 0.0;
+        }
+        if(d > 1){
+            d = 1.0;
+        }
+        this.list.add(d);
     }
     
-    public void addAttempt(){
-        this.attempts++;
+    public double getProbability(int interval){
+        return this.list.get(interval);
     }
     
-    public void addWinner(){
-        this.numberOfWinners++;
-    }    
-
-    /**
-     * @return the prizes
-     */
-    public MapOfPrizes getMapOfPrizes() {
-        return prizes;
-    }
-
-    /**
-     * @param prizes the prizes to set
-     */
-    public void setPrizes(MapOfPrizes prizes) {
-        this.prizes = prizes;
+    public int getSize(){
+        return this.list.size();
     }
     
+    public double getProbabilityByCurrentDate(Period period, Date currentDate){
+        long t1 = period.getEndDate().getTime();
+        long t2 = period.getStartDate().getTime();
+        long slotLong = (t1 - t2) / this.list.size();
+        long initialLong = t2;
+        for(int i = 0; i < list.size(); i++){
+            initialLong += slotLong;
+            if(currentDate.getTime() <= initialLong){
+                return this.list.get(i);
+            }
+        }
+        return this.list.get(this.list.size()-1);
+    }
     
 }

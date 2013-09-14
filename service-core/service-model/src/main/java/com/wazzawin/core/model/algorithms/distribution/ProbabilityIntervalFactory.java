@@ -33,92 +33,27 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package com.wazzawin.core.model.algorithms.common;
-
-import com.wazzawin.shared.contest.Frequency;
+package com.wazzawin.core.model.algorithms.distribution;
 
 /**
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
+public class ProbabilityIntervalFactory {
 
+    public ProbabilityInterval getConstantProbabilityInterval(double val){
+        ProbabilityInterval pi = new ProbabilityInterval();
+        pi.addProbability(val);
+        return pi;
+    }
 
-public class TimeSlot {
-
-    private Frequency frequency;
-    private int attempts;
-    private int numberOfWinners;
-    private MapOfPrizes prizes = new MapOfPrizes();
-    
-    public TimeSlot(){}
-    
-    public TimeSlot(Frequency f){
-        this.frequency = f;
+    public ProbabilityInterval getRandomProbabilityInterval(int numIntervals){
+        ProbabilityInterval pi = new ProbabilityInterval();
+        for(int i = 0; i < numIntervals; i++){
+            pi.addProbability(Math.random());
+        }
+        return pi;
     }
     
-    /**
-     * @return the attempts
-     */
-    public int getAttempts() {
-        return attempts;
-    }
-
-    /**
-     * @param attempts the attempts to set
-     */
-    public void setAttempts(int attempts) {
-        this.attempts = attempts;
-    }
-
-    /**
-     * @return the numberOfWinners
-     */
-    public int getNumberOfWinners() {
-        return numberOfWinners;
-    }
-
-    /**
-     * @param numberOfWinners the numberOfWinners to set
-     */
-    public void setNumberOfWinners(int numberOfWinners) {
-        this.numberOfWinners = numberOfWinners;
-    }
-
-    /**
-     * @return the frequency
-     */
-    public Frequency getFrequency() {
-        return frequency;
-    }
-
-    /**
-     * @param frequency the frequency to set
-     */
-    public void setFrequency(Frequency frequency) {
-        this.frequency = frequency;
-    }
-    
-    public void addAttempt(){
-        this.attempts++;
-    }
-    
-    public void addWinner(){
-        this.numberOfWinners++;
-    }    
-
-    /**
-     * @return the prizes
-     */
-    public MapOfPrizes getMapOfPrizes() {
-        return prizes;
-    }
-
-    /**
-     * @param prizes the prizes to set
-     */
-    public void setPrizes(MapOfPrizes prizes) {
-        this.prizes = prizes;
-    }
-    
-    
+    //TODO Gaussina Distribution
 }
