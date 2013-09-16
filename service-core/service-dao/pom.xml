@@ -109,9 +109,9 @@
         </dependency>
         
         <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-902.jdbc4</version>
+            <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>9.2-1002-jdbc4</version>
         </dependency>
        
         <dependency>
