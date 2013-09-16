@@ -35,13 +35,13 @@
  */
 package com.wazzawin.core.model.algorithms.common;
 
+import com.google.common.collect.Maps;
 import com.wazzawin.core.model.contest.Period;
 import com.wazzawin.core.model.contest.Periodicity;
 import com.wazzawin.core.model.user.UserPlayContest;
 import com.wazzawin.shared.contest.Frequency;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.EnumMap;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -51,40 +51,38 @@ import java.util.Set;
  *
  * @author Gianvito Summa - WazzaWin Developer Group
  */
-
-
 public class MapOfTimeSlot {
 
-    private Map<Frequency, TimeSlot> map = new EnumMap<Frequency, TimeSlot>(Frequency.class);
+    private Map<Frequency, TimeSlot> map = Maps.<Frequency, TimeSlot>newEnumMap(Frequency.class);
     private Calendar playDate = new GregorianCalendar();
-            
-    public MapOfTimeSlot(){
+
+    public MapOfTimeSlot() {
         initializeMap();
     }
- 
+
     private void initializeMap() {
-        for(Frequency f : Frequency.values()){
+        for (Frequency f : Frequency.values()) {
             this.map.put(f, new TimeSlot(f));
         }
     }
-    
-    public Set<Frequency> keySet(){
+
+    public Set<Frequency> keySet() {
         return this.map.keySet();
     }
-    
-    public void add(UserPlayContest upc, Calendar cal){
+
+    public void add(UserPlayContest upc, Calendar cal) {
         playDate.setTime(upc.getPlayDate());
         updateMap(Frequency.ONE_TIME, upc);
-        if(cal.get(Calendar.YEAR) == playDate.get(Calendar.YEAR)){
+        if (cal.get(Calendar.YEAR) == playDate.get(Calendar.YEAR)) {
             updateMap(Frequency.YEARLY, upc);
-            if(cal.get(Calendar.WEEK_OF_YEAR) == playDate.get(Calendar.WEEK_OF_YEAR)){
+            if (cal.get(Calendar.WEEK_OF_YEAR) == playDate.get(Calendar.WEEK_OF_YEAR)) {
                 updateMap(Frequency.WEEKLY, upc);
             }
-            if(cal.get(Calendar.MONTH) == playDate.get(Calendar.MONTH)){
+            if (cal.get(Calendar.MONTH) == playDate.get(Calendar.MONTH)) {
                 updateMap(Frequency.MONTHLY, upc);
-                if(cal.get(Calendar.DAY_OF_MONTH) == playDate.get(Calendar.DAY_OF_MONTH)){
+                if (cal.get(Calendar.DAY_OF_MONTH) == playDate.get(Calendar.DAY_OF_MONTH)) {
                     updateMap(Frequency.DAILY, upc);
-                    if(cal.get(Calendar.HOUR) == playDate.get(Calendar.HOUR)){
+                    if (cal.get(Calendar.HOUR) == playDate.get(Calendar.HOUR)) {
                         updateMap(Frequency.HOURLY, upc);
                     }
                 }
@@ -95,14 +93,14 @@ public class MapOfTimeSlot {
     private void updateMap(Frequency frequency, UserPlayContest upc) {
         TimeSlot ts = map.get(frequency);
         ts.addAttempt();
-        if(upc.isWinning()){
+        if (upc.isWinning()) {
             ts.addWinner();
         }
-        if(frequency == upc.getFrequency()){
+        if (frequency == upc.getFrequency()) {
             ts.getMapOfPrizes().add(upc.getPrize());
         }
     }
-    
+
     public int getAttempts(Frequency f) {
         TimeSlot ts = this.map.get(f);
         return ts.getAttempts();
@@ -112,27 +110,27 @@ public class MapOfTimeSlot {
         TimeSlot ts = this.map.get(f);
         return ts.getNumberOfWinners();
     }
-    
-    public MapOfPrizes getMapOfPrizes(Frequency f){
+
+    public MapOfPrizes getMapOfPrizes(Frequency f) {
         TimeSlot ts = this.map.get(f);
         return ts.getMapOfPrizes();
     }
 
     public void addPeriodConstraints(Period period) {
         List<Periodicity> list = period.getPeriodicityListWithPrizes();
-        TimeSlot ts; 
-        for(Periodicity periodicity : list){
+        TimeSlot ts;
+        for (Periodicity periodicity : list) {
             ts = this.map.get(periodicity.getFrequency());
             ts.getMapOfPrizes().addPeriodicityConstraints(periodicity);
         }
     }
-    
-    public List<Frequency> getAvailableFrequencies(){
+
+    public List<Frequency> getAvailableFrequencies() {
         List<Frequency> list = new ArrayList<Frequency>();
         MapOfPrizes mapOfPrizes;
-        for(Frequency f : Frequency.values()){
+        for (Frequency f : Frequency.values()) {
             mapOfPrizes = this.getMapOfPrizes(f);
-            if(!mapOfPrizes.getRemainingPrizes().isEmpty()){
+            if (!mapOfPrizes.getRemainingPrizes().isEmpty()) {
                 list.add(f);
             }
         }

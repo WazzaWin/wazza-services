@@ -35,12 +35,12 @@
  */
 package com.wazzawin.core.model.algorithms.common;
 
+import com.google.common.collect.Maps;
 import com.wazzawin.core.model.contest.Periodicity;
 import com.wazzawin.core.model.contest.Prize;
 import com.wazzawin.core.model.contest.PrizePeriodicity;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,43 +50,43 @@ import java.util.Map;
  */
 public class MapOfPrizes {
 
-    private Map<Prize,Integer> map = new HashMap<Prize,Integer>();
-    private Map<Prize,Integer> mapConstraints = new HashMap<Prize,Integer>();
-    private Map<Prize, Integer> mapRemaining = new HashMap<Prize, Integer>();
-    
-    public void add(Prize p){
+    private Map<Prize, Integer> map = Maps.<Prize, Integer>newHashMap();
+    private Map<Prize, Integer> mapConstraints = Maps.<Prize, Integer>newHashMap();
+    private Map<Prize, Integer> mapRemaining = Maps.<Prize, Integer>newHashMap();
+
+    public void add(Prize p) {
         Integer pp = map.get(p);
-        if(pp == null){
+        if (pp == null) {
             add(p, new Integer(1));
             return;
         }
         pp++;
         add(p, pp);
     }
-    
-    public void add(Prize p, Integer pp){
+
+    public void add(Prize p, Integer pp) {
         map.put(p, pp);
     }
-    
-    public int getOccurrences(Prize p){
+
+    public int getOccurrences(Prize p) {
         return map.get(p);
     }
 
-    public List<Prize> getRemainingPrizes(){
+    public List<Prize> getRemainingPrizes() {
         mapRemaining.clear();
         List<Prize> list = new ArrayList<Prize>();
         int items = 0;
-        for(Prize p : map.keySet()){
+        for (Prize p : map.keySet()) {
             items = getRemainingItems(p);
-            if(items > 0){
+            if (items > 0) {
                 mapRemaining.put(p, items);
                 list.add(p);
             }
         }
         return list;
     }
-    
-    public int getRemainingItems(Prize p){
+
+    public int getRemainingItems(Prize p) {
         Integer occurences = getOccurrences(p);
         Integer numberOfItems = mapConstraints.get(p);
         return numberOfItems - occurences;
@@ -95,7 +95,7 @@ public class MapOfPrizes {
     public void addPeriodicityConstraints(Periodicity periodicity) {
         this.mapConstraints.clear();
         Prize prize;
-        for(PrizePeriodicity pp : periodicity.getPrizePeriodicityList()){
+        for (PrizePeriodicity pp : periodicity.getPrizePeriodicityList()) {
             prize = pp.getPrize();
             mapConstraints.put(prize, new Integer(pp.getNumberOfPrizes()));
         }
